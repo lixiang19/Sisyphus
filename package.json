@@ -36,8 +36,8 @@
     "electron-start": "electron . dev",
     "electron-build": "electron-builder",
     "electron-release": "electron-builder --publish=always",
-    "react-start": "react-scripts start",
-    "react-build": "react-scripts build",
+    "react-start": "react-app-rewired start",
+    "react-build": "react-app-rewired build",
     "react-serve": "SET BROWSER=none&&npm run react-start"
   },
   "build": {
@@ -100,7 +100,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.14.5",
-    "@emotion/babel-plugin": "^11.3.0",
+    "@emotion/babel-plugin": "^11.7.1",
     "@types/react": "^17.0.34",
     "@types/react-router-config": "^5.0.3",
     "@types/react-router-dom": "^5.1.8",

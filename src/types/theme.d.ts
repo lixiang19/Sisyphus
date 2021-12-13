@@ -1,4 +1,4 @@
-import themeMap from 'src/assets/styles/theme'
+import themeMap from 'src/styles/theme'
 declare module '@emotion/react' {
   export interface Theme {
     themeColor: string
