@@ -1,10 +1,10 @@
 import { RouteConfig } from 'react-router-config'
-import TaskConfigure from 'src/pages/TaskConfigure'
+import Todo from 'src/pages/Todo'
 import Tomato from 'src/pages/Tomato'
 const routeList: RouteConfig[] = [
   {
-    path: '/',
-    component: TaskConfigure
+    path: '/Todo',
+    component: Todo
   },
   {
     path: '/Tomato',

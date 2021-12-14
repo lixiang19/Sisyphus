@@ -2,23 +2,32 @@ import styled from '@emotion/styled'
 import s from 'src/styles/styleObject'
 import { Menu } from '@arco-design/web-react'
 import { IconApps, IconSafe, IconBulb, IconRobot, IconFire } from '@arco-design/web-react/icon'
+import { Link } from 'react-router-dom'
+import { MouseEvent } from 'react'
 const MenuItem = Menu.Item
 const HomeBox = styled.div(
   {
-    height: '#f2f3f5',
+    height: '100vh',
     backgroundColor: s.theme.backgroundColor
   },
   s.flex.row.s.s
 )
 const MenuBox = styled.div(
   {
-    width: 200
-  }
+    width: 150,
+    backgroundColor: '#f7f6f3',
+    Menu: {
+      color: 'red'
+    }
+  },
+  s.fullh
 )
+
 const ContentBox = styled.div(
   {
     width: 'auto',
-    flex: '1'
+    flex: '1',
+    padding: 20
   }
 )
 
@@ -29,10 +38,18 @@ const Home = ({ children }:IHomeProps) => {
   return (
     <HomeBox>
       <MenuBox>
-        <Menu style={{ width: 200 }} mode='pop' hasCollapseButton>
-          <MenuItem key='0'>
+        <Menu mode='pop' css={{ height: '100%' }} >
+          <MenuItem key='Tomato'>
             <IconApps />
-            番茄时钟
+            <Link to='Tomato'>
+              番茄时钟
+            </Link>
+          </MenuItem>
+          <MenuItem key='Todo'>
+            <IconApps />
+            <Link to='Todo'>
+              Todo
+            </Link>
           </MenuItem>
           <MenuItem key='1'>
             <IconApps />
