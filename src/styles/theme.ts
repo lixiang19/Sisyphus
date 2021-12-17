@@ -1,6 +1,6 @@
 const theme = {
   themeColor: '#643fdb',
-  cardBg: '#fbfaff', // 日后可以方便切换黑暗模式
+  cardBg: '#ffffff', // 日后可以方便切换黑暗模式
   // backgroundColor: '#f7f8fa',
   backgroundColor: '#f4f7ff',
   textPrimary: '#303133',

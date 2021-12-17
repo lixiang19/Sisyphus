@@ -128,12 +128,6 @@ export const card = {
     }
   }
 }
-// const foo = {
-//   grid: {
-//     display: 'grid'
-//   },
-//   grid
-// }
 
 // 这样玩虽然很炫酷，full和full.w返回不同的东西，但是和其他的style表现不一致了
 // const full: IFull = {
