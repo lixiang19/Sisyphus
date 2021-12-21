@@ -5,15 +5,15 @@ import Demo from 'src/pages/Demo'
 
 const routeList: RouteConfig[] = [
   {
-    path: '/Todo',
+    path: '/todo',
     component: Todo
   },
   {
-    path: '/Tomato',
+    path: '/tomato',
     component: Tomato
   },
   {
-    path: '/Demo',
+    path: '/demo',
     component: Demo
   }
 ]
