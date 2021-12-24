@@ -11,7 +11,6 @@ const text = {
   value: textBase(fz.md, theme.textRegular, 400),
   subtitle: textBase(fz.sm, theme.textSecondary, 200)
 }
-
 const styleHelper = {
   full: {
     height: '100%',
