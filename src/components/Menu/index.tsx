@@ -9,6 +9,7 @@ const MenuBox = styled.div(
   },
   s.fullh
 )
+
 const Menu = () => {
   return (
     <MenuBox>
