@@ -1,5 +1,7 @@
 import theme from './theme'
-import { space, textBase, flex, card, depth } from './generateStyle'
+import { space, textBase, card, depth } from './generateStyle'
+import flex from './styleHelper/flex'
+import bg from './styleHelper/bg'
 const fz = {
   sm: '12px',
   md: '16px',
@@ -34,6 +36,7 @@ const styleHelper = {
   fz,
   text,
   flex,
+  bg,
   space
 }
 export default styleHelper

@@ -12,7 +12,7 @@ const MenuBox = styled.div(
   s.flex.col.s.sh,
   s.space.p4
 )
-console.log(global)
+
 const MenuItemBox = styled.div(
   {
     ':hover': {

@@ -38,4 +38,10 @@ function generateFlex () {
   })
   return obj as IFlex
 }
-export const flex = generateFlex()
+const flex = {
+  ...generateFlex(),
+  wrap: {
+    flexWrap: 'wrap'
+  }
+}
+export default flex
