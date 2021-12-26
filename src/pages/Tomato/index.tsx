@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import s from 'src/styles/styleObject'
+import s from 'src/styles/styleHelper'
 import { useRequest, useInterval, useBoolean } from 'ahooks'
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { Progress, Button } from '@arco-design/web-react'
@@ -10,11 +10,9 @@ import duration from 'dayjs/plugin/duration'
 dayjs.extend(duration)
 
 const TomatoBox = styled.div(
-  {
-    height: 200,
-    width: 200,
-    position: 'relative'
-  },
+  s.height['2rem'],
+  s.width['2rem'],
+  // s.relative,
   s.flex.col.c.c
 )
 
@@ -27,11 +25,12 @@ const TomatoProgress = styled(Progress)({
 
 const ActionBox = styled.div(
   {
-    position: 'absolute',
-    fontSize: 40,
-    color: s.theme.themeColor
+    position: 'absolute'
   },
-  s.full,
+  s.height.full,
+  s.width.full,
+  s.font.color.primary,
+  s.font.size.xl,
   s.flex.col.c.c
 )
 const MIconButton = styled.div(
@@ -39,9 +38,9 @@ const MIconButton = styled.div(
     cursor: 'pointer',
     position: 'absolute',
     bottom: '10%',
-    fontSize: 30,
-    color: s.theme.textSecondary
-  }
+    fontSize: 30
+  },
+  s.font.color.primary
 )
 
 interface ITimeLabelProps {
@@ -81,7 +80,7 @@ const Tomato = () => {
         <TimeLabel second={second}></TimeLabel>
         <MIconButton>
           {isProgress ? <IconPause onClick={setPause}/> : <IconPlayArrow onClick={startTomato}/>}
-          {isProgress ? <IconRecordStop css={{ color: s.theme.dangerColor }}/> : ''}
+          {/* {isProgress ? <IconRecordStop css={{ color: s.theme.dangerColor }}/> : ''} */}
         </MIconButton>
       </ActionBox>
 

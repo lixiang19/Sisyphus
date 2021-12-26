@@ -1,22 +1,22 @@
 import React from 'react'
 import { renderRoutes } from 'react-router-config'
 import routes from 'src/routes/index'
-import theme from 'src/styles/theme'
 import Home from 'src/components/Home'
-import 'src/styles/reset.css'
 import '@arco-design/web-react/dist/css/arco.css'
+import 'src/styles/reset.css'
+import api from 'src/api'
 import { HashRouter as Router } from 'react-router-dom'
-
-import { ThemeProvider } from '@emotion/react'
+import Bmob from 'hydrogen-js-sdk'
+import { useRequest } from 'ahooks'
+Bmob.initialize('f0f490ebe4ca47d3', '123456')
 
 function App () {
+  const { data, error, loading } = useRequest(api.user.login)
   return (
     <Router>
-      <ThemeProvider theme={theme}>
-        <Home>
-          {renderRoutes(routes)}
-        </Home>
-      </ThemeProvider>
+      <Home>
+        {data ? renderRoutes(routes) : 'loading'}
+      </Home>
     </Router>
   )
 }

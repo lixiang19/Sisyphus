@@ -1,5 +1,8 @@
 import ThemeColor from '../theme/color'
+import { genProxy } from 'src/helpers/type'
+type Bg = {
 
+}
 const bg:any = {}
 function isColorItem (arg: ColorItem|string): arg is ColorItem {
   return (arg as ColorItem)[100] !== undefined
@@ -19,6 +22,6 @@ Object.keys(ThemeColor).forEach((key) => {
     })
   }
 })
-console.log('ssssss', bg)
 
-export default bg as ThemeColorUse
+const proxyBg = genProxy(bg, 'backgroundColor')
+export default proxyBg as ThemeColorUse

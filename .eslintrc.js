@@ -15,15 +15,12 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   globals: {
-    utools: 'readonly',
-    util: 'readonly',
-    eventBus: 'readonly',
-    log: 'readonly'
+
   },
   rules: {
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
-    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-vars': 'off',
     'no-unused-vars': 'off',
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],

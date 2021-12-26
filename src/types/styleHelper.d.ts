@@ -4,6 +4,7 @@ interface IFlexProp {
   justifyContent: string
   alignItems: string
 }
+type PositionType = 'absolute'|'relative'|'fixed'|'sticky'
 type flexItem = IFlexProp & string
 interface IFlexCol {
   s: flexItem

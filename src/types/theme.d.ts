@@ -13,6 +13,7 @@
 //   }
 // }
 interface ColorItem {
+  50: string,
   100: string,
   200: string,
   300: string,
@@ -28,7 +29,22 @@ type ColorUseItem = {
 }
 interface Color {
   slate:Readonly<ColorItem>,
+  gray:Readonly<ColorItem>,
+  zinc:Readonly<ColorItem>,
   neutral:Readonly<ColorItem>,
+  stone:Readonly<ColorItem>,
+  red:Readonly<ColorItem>,
+  amber:Readonly<ColorItem>,
+  yellow:Readonly<ColorItem>,
+  lime:Readonly<ColorItem>,
+  green:Readonly<ColorItem>,
+  emerald:Readonly<ColorItem>,
+  cyan:Readonly<ColorItem>,
+  blue:Readonly<ColorItem>,
+  indigo:Readonly<ColorItem>,
+  purple:Readonly<ColorItem>,
+  fuchsia:Readonly<ColorItem>,
+  pink:Readonly<ColorItem>,
   sky:Readonly<ColorItem>,
   violet:Readonly<ColorItem>,
   rose:Readonly<ColorItem>,
@@ -42,6 +58,7 @@ interface BaseColor {
   primary: string,
   white: string,
   black: string,
+  transparent: string,
 }
 type BaseColorUse = {
   [key in keyof BaseColor]: IAnyPropObject

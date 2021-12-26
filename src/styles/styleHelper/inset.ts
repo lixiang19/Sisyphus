@@ -1,23 +1,36 @@
-
+import { genProxy } from 'src/helpers/type'
 import size from './size'
-const inset = {
+type Inset = {
+  top:ISizeUse,
+  right:ISizeUse,
+  bottom:ISizeUse,
+  left:ISizeUse,
+}
+const inset:Inset = {
   top: {},
   right: {},
   bottom: {},
   left: {}
 }
 Object.keys(size).forEach(key => {
-  inset.top = {
-    key: size[key]
+  inset.top[key] = {
+    top: size[key]
   }
-  inset.right = {
+  inset.right[key] = {
     right: size[key]
   }
-  inset.bottom = {
+  inset.bottom[key] = {
     bottom: size[key]
   }
-  inset.left = {
+  inset.left[key] = {
     left: size[key]
   }
 })
-export default inset
+const proxy = {
+  top: genProxy(inset.top, 'top'),
+  right: genProxy(inset.right, 'right'),
+  bottom: genProxy(inset.bottom, 'bottom'),
+  left: genProxy(inset.left, 'left')
+}
+
+export default proxy

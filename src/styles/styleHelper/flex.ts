@@ -42,6 +42,12 @@ const flex = {
   ...generateFlex(),
   wrap: {
     flexWrap: 'wrap'
+  },
+  grow: {
+    flexGrow: 1
+  },
+  noShrink: {
+    flexShrink: 0
   }
 }
 export default flex

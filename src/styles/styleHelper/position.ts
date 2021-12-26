@@ -1,15 +1,15 @@
 const pos = {
   absolute: {
-    position: 'absolute'
+    position: 'absolute' as PositionType
   },
   relative: {
-    position: 'relative'
+    position: 'relative' as PositionType
   },
   fixed: {
-    position: 'fixed'
+    position: 'fixed' as PositionType
   },
   sticky: {
-    position: 'sticky'
+    position: 'sticky'as PositionType
   },
   bottom: {
     position: 'absolute',

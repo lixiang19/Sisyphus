@@ -11,6 +11,7 @@ interface Window {
       log(str: any): void
     }
   }
+  cp:any
   node: {
     eventBus: EventEmitter
   }

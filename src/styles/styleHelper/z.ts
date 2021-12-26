@@ -1,7 +1,7 @@
-interface IZ {
-  [index: number]: IAnyPropObject,
+
+type IZ = {
   auto:IAnyPropObject
-}
+}&IAnyPropObject
 const z:IZ = {
   99: {
     zIndex: 99
