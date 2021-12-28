@@ -17,11 +17,12 @@ const HabitItemBox = styled.div(
 )
 interface IHabitItem {
   children?: React.ReactNode;
-  habit:Habit
+  habit:Habit,
+  level:number
 }
 
-const HabitItem = ({ children, habit }: IHabitItem) => {
-  const [rate, setRate] = useState(0)
+const HabitItem = ({ children, habit, level }: IHabitItem) => {
+  const [rate, setRate] = useState(level)
   const desc = ['开始吧！', ...habit.habits]
   return (
     <HabitItemBox>
@@ -38,13 +39,14 @@ const HabitBox = styled.div(
   s.width[80]
 )
 const Habit = () => {
-  const { data, error, loading } = useRequest(api.habit.findAll)
+  const { data: habits, error, loading } = useRequest(api.habit.findAllHabit)
+  console.log('🚀 ~ file: Habit.tsx ~ line 43 ~ Habit ~ habits', habits)
 
   return (
     <HabitBox>
       {
-        data && data.map((habit) => {
-          return <HabitItem habit={habit} key={habit.objectId} />
+        habits && habits.map((habit) => {
+          return <HabitItem habit={habit} key={habit.objectId} level={habit.level}/>
         })
       }
     </HabitBox>

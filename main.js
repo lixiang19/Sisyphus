@@ -5,7 +5,7 @@ let mainWindow = null
 const mode = process.argv[2]
 
 // 限制只启动一个
-function makeSingleInstance () {
+function makeSingleInstance() {
   if (process.mas) return
   app.requestSingleInstanceLock()
   app.on('second-instance', () => {
@@ -17,22 +17,20 @@ function makeSingleInstance () {
 }
 
 // 用于添加Chromium插件
-function createDevTools () {
+function createDevTools() {
   const {
     default: installExtension,
-    REACT_DEVELOPER_TOOLS,
-    REDUX_DEVTOOLS
+    REACT_DEVELOPER_TOOLS
   } = require('electron-devtools-installer')
   // 安装devtron
   const devtronExtension = require('devtron')
   devtronExtension.install()
   // 安装React开发者工具
   installExtension(REACT_DEVELOPER_TOOLS)
-  installExtension(REDUX_DEVTOOLS)
 }
 
 // createWindow()方法来将index.html加载进一个新的BrowserWindow实例。
-function createWindow () {
+function createWindow() {
   const windowOptions = {
     width: 1000,
     height: 700,
@@ -44,7 +42,7 @@ function createWindow () {
   mainWindow = new BrowserWindow(windowOptions)
   // 判断是否是开发模式
   if (mode === 'dev') {
-    mainWindow.loadURL('http://localhost:3000/') // http://localhost:8002/ 前端开发环境地址
+    mainWindow.loadURL('http://localhost:8000/') // http://localhost:8002/ 前端开发环境地址
     mainWindow.webContents.openDevTools() // 自动打开控制台
     createDevTools()
   } else {

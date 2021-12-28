@@ -6,12 +6,11 @@ import '@arco-design/web-react/dist/css/arco.css'
 import 'src/styles/reset.css'
 import api from 'src/api'
 import { HashRouter as Router } from 'react-router-dom'
-import Bmob from 'hydrogen-js-sdk'
+
 import { useRequest } from 'ahooks'
-Bmob.initialize('f0f490ebe4ca47d3', '123456')
 
 function App () {
-  const { data, error, loading } = useRequest(api.user.login)
+  const { data, error, loading } = useRequest(api.user.preload)
   return (
     <Router>
       <Home>
