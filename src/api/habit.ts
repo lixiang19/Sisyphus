@@ -12,13 +12,29 @@ const addHabit = async () => {}
 const updateHabit = async () => {}
 const deleteHabit = async () => {}
 
-const findAllDateHabitRelation = async () => {}
+const findAllDateHabitRelation = async (dateId: string) => {
+  const query = Bmob.Query('date_habit_relation')
+  console.log('🚀 ~ file: habit.ts ~ line 17 ~ findAllDateHabitRelation ~ query', query)
+  query.equalTo('dateFk', '==', dateId)
+  query.include('dateFk', 'habitFk')
+  return gen<BaseBmobItem>(query.find())
+}
 const findDateHabitRelation = async (dateId: string) => {
   const query = Bmob.Query('date_habit_relation')
-  query.equalTo('dateId', '==', dateId)
-  return gen<DateHabitRelation>(query.find())
+  query.equalTo('dateFk', '==', dateId)
+  return gen<DateHabitRelation[]>(query.find())
 }
-const addDateHabitRelation = async () => {}
+const addDateHabitRelation = async (habitId: string, dateId: string) => {
+  const query = Bmob.Query('date_habit_relation')
+  const pointer = Bmob.Pointer('date')
+  const pointerDate = pointer.set(dateId)
+  const pointer2 = Bmob.Pointer('mini_habits')
+  const pointerHabit = pointer2.set(habitId)
+  query.set('dateFk', (pointerDate as any))
+  query.set('habitFk', (pointerHabit as any))
+  query.set('level', 0 as any)
+  return gen<BaseBmobItem>(query.save())
+}
 const updateDateHabitRelation = async () => {}
 const deleteDateHabitRelation = async () => {}
 // const findDateHabitRelation = async (dateId: string) => {
@@ -54,5 +70,8 @@ const deleteDateHabitRelation = async () => {}
 //   return habits as HabitOneDay[]
 // }
 export default {
-
+  findAllHabit,
+  addDateHabitRelation,
+  findDateHabitRelation,
+  findAllDateHabitRelation
 }

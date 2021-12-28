@@ -6,6 +6,11 @@ type Pointer = {
   className: string;
   objectId: string;
 }
+type BaseBmobItem = {
+  objectId: string;
+  createdAt: string;
+}
+
 type Habit = {
   objectId: string,
   name: string,

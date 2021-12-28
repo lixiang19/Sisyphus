@@ -9,10 +9,10 @@ const login = () => {
 }
 const checkToday = async () => {
   const { datetime } = await (Bmob.timestamp() as Promise<any>)
-  const dates = await dateApi.findDate(datetime)
+  const dates = await dateApi.findDay(datetime)
   let dateId = null
   if (dates.length === 0) {
-    const { objectId } = await dateApi.setDate(datetime)
+    const { objectId } = await dateApi.addDate(datetime)
     dateId = objectId
   } else {
     const { objectId } = dates[0]
@@ -22,16 +22,19 @@ const checkToday = async () => {
 }
 const initTodayDateHabitRelation = async () => {
   const dateId = await checkToday()
-  const habits = await habitApi.findHabits()
-  // const dateHabitRelation = await habitApi.findDateHabitRelation(dateId)
-  habits.forEach(habit => {
-
+  const dateHabitRelation = await habitApi.findDateHabitRelation(dateId)
+  if (dateHabitRelation.length !== 0) return
+  const habits = await habitApi.findAllHabit()
+  habits.forEach(async habit => {
+    const res = await habitApi.addDateHabitRelation(habit.objectId, dateId)
   })
 }
 
 const preload = async () => {
-  await login()
+  const res = await login()
   await checkToday()
+  await initTodayDateHabitRelation()
+  return res
 }
 export default {
   login,

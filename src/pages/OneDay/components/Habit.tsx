@@ -39,16 +39,16 @@ const HabitBox = styled.div(
   s.width[80]
 )
 const Habit = () => {
-  const { data: habits, error, loading } = useRequest(api.habit.findAllHabit)
+  const { data: habits, error, loading } = useRequest(api.habit.findAllDateHabitRelation)
   console.log('🚀 ~ file: Habit.tsx ~ line 43 ~ Habit ~ habits', habits)
 
   return (
     <HabitBox>
-      {
+      {/* {
         habits && habits.map((habit) => {
           return <HabitItem habit={habit} key={habit.objectId} level={habit.level}/>
         })
-      }
+      } */}
     </HabitBox>
   )
 }
