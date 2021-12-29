@@ -1,7 +1,8 @@
-type DateType = {
-  objectId: string,
-  date:BmobDate
+type BmobDate = {
+  __type: 'Date';
+  iso: string;
 }
+
 type Pointer = {
   className: string;
   objectId: string;
@@ -16,18 +17,19 @@ type Habit = {
   name: string,
   habits: string[],
 }
-type HabitOneDay = {
-  dateId: string,
-  level: number,
-  habitDateId:string
-}&Habit
+type DateType = {
+  objectId: string,
+  date:BmobDate
+}
 type DateHabitRelation = {
   objectId: string,
   habitFk: Pointer,
   dateFk: Pointer,
   level: number,
 }
-type BmobDate = {
-  __type: 'Date';
-  iso: string;
+type DateHabitRelationJoin = {
+  objectId: string,
+  habitFk: Pointer&Habit,
+  dateFk: Pointer&DateType,
+  level: number,
 }

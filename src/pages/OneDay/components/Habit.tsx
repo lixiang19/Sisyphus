@@ -17,17 +17,23 @@ const HabitItemBox = styled.div(
 )
 interface IHabitItem {
   children?: React.ReactNode;
-  habit:Habit,
-  level:number
+  dateHabitRelationJoin:DateHabitRelationJoin,
 }
 
-const HabitItem = ({ children, habit, level }: IHabitItem) => {
-  const [rate, setRate] = useState(level)
-  const desc = ['开始吧！', ...habit.habits]
+const HabitItem = ({ children, dateHabitRelationJoin }: IHabitItem) => {
+  const [rate, setRate] = useState(dateHabitRelationJoin.level)
+  const desc = ['开始吧！', ...dateHabitRelationJoin.habitFk.habits]
+  const { loading, run: setLevel } = useRequest(api.habit.updateDateHabitRelation, {
+    manual: true
+  })
+  function handleRateChange (level: number) {
+    setRate(level)
+    setLevel(dateHabitRelationJoin.objectId, level)
+  }
   return (
     <HabitItemBox>
-      <span css={s.label}>{habit.name}:</span>
-      <Rate value={rate} onChange={(value) => setRate(value)} count={3} tooltips={['😊完成了习惯打卡', '😘厉害！更进一步', '😍非常棒！超越自我']}></Rate>
+      <span css={s.label}>{dateHabitRelationJoin.habitFk.name}:</span>
+      <Rate value={rate} onChange={handleRateChange} count={3} tooltips={['😊完成了习惯打卡', '😘厉害！更进一步', '😍非常棒！超越自我']}></Rate>
       <span css={s.text}>{desc[rate]}</span>
     </HabitItemBox>
   )
@@ -39,16 +45,15 @@ const HabitBox = styled.div(
   s.width[80]
 )
 const Habit = () => {
-  const { data: habits, error, loading } = useRequest(api.habit.findAllDateHabitRelation)
-  console.log('🚀 ~ file: Habit.tsx ~ line 43 ~ Habit ~ habits', habits)
+  const { data: habits, error, loading } = useRequest(api.habit.findTodayHabitRelationJoin)
 
   return (
     <HabitBox>
-      {/* {
+      {
         habits && habits.map((habit) => {
-          return <HabitItem habit={habit} key={habit.objectId} level={habit.level}/>
+          return <HabitItem dateHabitRelationJoin={habit} key={habit.objectId}/>
         })
-      } */}
+      }
     </HabitBox>
   )
 }

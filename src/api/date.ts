@@ -18,8 +18,21 @@ const addDate = async (date:Date) => {
 }
 const updateDate = async (date: any) => {}
 const deleteDate = async (date: any) => {}
-
+const checkToday = async () => {
+  const { datetime } = await (Bmob.timestamp() as Promise<any>)
+  const dates = await findDay(datetime)
+  let dateId = null
+  if (dates.length === 0) {
+    const { objectId } = await addDate(datetime)
+    dateId = objectId
+  } else {
+    const { objectId } = dates[0]
+    dateId = objectId
+  }
+  return dateId
+}
 export default {
   findDay,
-  addDate
+  addDate,
+  checkToday
 }

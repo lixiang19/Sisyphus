@@ -7,21 +7,9 @@ Bmob.initialize('f0f490ebe4ca47d3', '123456')
 const login = () => {
   return gen(Bmob.User.login('li', '123456'))
 }
-const checkToday = async () => {
-  const { datetime } = await (Bmob.timestamp() as Promise<any>)
-  const dates = await dateApi.findDay(datetime)
-  let dateId = null
-  if (dates.length === 0) {
-    const { objectId } = await dateApi.addDate(datetime)
-    dateId = objectId
-  } else {
-    const { objectId } = dates[0]
-    dateId = objectId
-  }
-  return dateId
-}
+
 const initTodayDateHabitRelation = async () => {
-  const dateId = await checkToday()
+  const dateId = await dateApi.checkToday()
   const dateHabitRelation = await habitApi.findDateHabitRelation(dateId)
   if (dateHabitRelation.length !== 0) return
   const habits = await habitApi.findAllHabit()
@@ -32,7 +20,7 @@ const initTodayDateHabitRelation = async () => {
 
 const preload = async () => {
   const res = await login()
-  await checkToday()
+  await dateApi.checkToday()
   await initTodayDateHabitRelation()
   return res
 }

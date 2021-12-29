@@ -1,7 +1,7 @@
 import Bmob from 'hydrogen-js-sdk'
 import dayjs from 'dayjs'
 import { genDate, gen } from 'src/helpers/bmob'
-
+import dateApi from './date'
 const findAllHabit = async () => {
   const query = Bmob.Query('mini_habits')
   const habits = await (query.find() as unknown as Habit[])
@@ -12,12 +12,16 @@ const addHabit = async () => {}
 const updateHabit = async () => {}
 const deleteHabit = async () => {}
 
-const findAllDateHabitRelation = async (dateId: string) => {
+const findDateHabitRelationJoin = async (dateId: string) => {
   const query = Bmob.Query('date_habit_relation')
-  console.log('🚀 ~ file: habit.ts ~ line 17 ~ findAllDateHabitRelation ~ query', query)
   query.equalTo('dateFk', '==', dateId)
   query.include('dateFk', 'habitFk')
-  return gen<BaseBmobItem>(query.find())
+  return gen<DateHabitRelationJoin[]>(query.find())
+}
+const findTodayHabitRelationJoin = async () => {
+  const dateId = await dateApi.checkToday()
+  const dateHabitRelation = await findDateHabitRelationJoin(dateId)
+  return dateHabitRelation
 }
 const findDateHabitRelation = async (dateId: string) => {
   const query = Bmob.Query('date_habit_relation')
@@ -35,43 +39,19 @@ const addDateHabitRelation = async (habitId: string, dateId: string) => {
   query.set('level', 0 as any)
   return gen<BaseBmobItem>(query.save())
 }
-const updateDateHabitRelation = async () => {}
+const updateDateHabitRelation = async (objectId: string, level:number) => {
+  const query = Bmob.Query('date_habit_relation')
+  query.set('id', objectId) // 需要修改的objectId
+  query.set('level', level as any)
+  return gen<BaseBmobItem>(query.save())
+}
 const deleteDateHabitRelation = async () => {}
-// const findDateHabitRelation = async (dateId: string) => {
-//   const query = Bmob.Query('date_habit_relation')
-//   query.equalTo('dateId', '==', dateId)
-//   return gen<DateHabitRelation>(query.find())
-//   //
-// }
 
-// const findDateHabitRelationCheckDate = async () => {
-//   const res = await findDateHabitRelation(dateId)
-//   return res as DateHabitRelation[]
-// }
-// const findHabits = async () => {
-//   const query = Bmob.Query('mini_habits')
-//   const habits = await (query.find() as unknown as Habit[])
-//   return habits
-// }
-// const findAllHabit = async () => {
-//   const DateHabitRelations = await findDateHabitRelationCheckDate()
-//   const query = Bmob.Query('mini_habits')
-//   const habits = await (query.find() as unknown as Habit[])
-//   habits.forEach(habit => {
-//     const DateHabitRelation = DateHabitRelations.find(h => h.habitFk.objectId === habit.objectId)
-//     if (DateHabitRelation) {
-//       (habit as HabitOneDay).level = DateHabitRelation.level;
-//       (habit as HabitOneDay).dateId = DateHabitRelation.dateFk.objectId;
-//       (habit as HabitOneDay).habitDateId = DateHabitRelation.objectId
-//     } else {
-//       (habit as HabitOneDay).level = 0
-//     }
-//   })
-//   return habits as HabitOneDay[]
-// }
 export default {
   findAllHabit,
   addDateHabitRelation,
   findDateHabitRelation,
-  findAllDateHabitRelation
+  findTodayHabitRelationJoin,
+  findDateHabitRelationJoin,
+  updateDateHabitRelation
 }
