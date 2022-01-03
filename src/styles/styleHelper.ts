@@ -9,7 +9,7 @@ import font from './styleHelper/font'
 import gap from './styleHelper/gap'
 import inset from './styleHelper/inset'
 import interactivity from './styleHelper/interactivity'
-import ObjectFit from './styleHelper/ObjectFit'
+import objectFit from './styleHelper/objectFit'
 import overflow from './styleHelper/overflow'
 import position from './styleHelper/position'
 import space from './styleHelper/space'
@@ -30,7 +30,7 @@ const s = {
   gap,
   inset,
   interactivity,
-  ObjectFit,
+  objectFit,
   overflow,
   space,
   position,

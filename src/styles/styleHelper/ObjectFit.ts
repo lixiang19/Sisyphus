@@ -1,4 +1,4 @@
-const ObjectFit = {
+const objectFit = {
   contain: {
     objectFit: 'contain'
   },
@@ -15,4 +15,4 @@ const ObjectFit = {
     objectFit: 'scale-down'
   }
 }
-export default ObjectFit
+export default objectFit
