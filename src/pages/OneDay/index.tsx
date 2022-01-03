@@ -24,18 +24,20 @@ const CenterWrapper = styled.div(
   s.gap.y[10]
 )
 const DayWrapper = styled.div(
-  s.width['1/4']
+  s.width['1/4'],
+  s.height.full,
+  s.bg.white
 )
 const OneDay = () => {
   return (
     <OneDayBox>
       <TodoWrapper>
-        <Card title='立刻'>
+        {/* <Card title='立刻'>
         ss
         </Card>
         <Card title='接着'>
         ss
-        </Card>
+        </Card> */}
       </TodoWrapper>
       <CenterWrapper>
         <Card title='临时笔记' >
@@ -53,9 +55,7 @@ const OneDay = () => {
         </Card>
       </CenterWrapper>
       <DayWrapper>
-        <Card title='今天'>
-        ss
-        </Card>
+
       </DayWrapper>
     </OneDayBox>
   )

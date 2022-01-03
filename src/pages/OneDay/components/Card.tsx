@@ -4,14 +4,23 @@ import { useRequest } from 'ahooks'
 import { useState, useEffect, useMemo, useRef } from 'react'
 const CardContainer = styled.div(
   s.flex.col.s.s,
-  s.gap.y[4]
+  s.width.full,
+  s.gap.y[4],
+  s.padding.all[5],
+  s.card()
 )
 const ChildContainer = styled.div(
-  s.card(),
-  s.padding.all[5]
+
+)
+const Header = styled.div(
+  s.flex.row.s.s,
+  s.border.bottom,
+  s.width.full,
+  s.height[10]
 )
 const Title = styled.div(
   s.title
+
 )
 interface ItemProp {
   children?: React.ReactNode;
@@ -20,7 +29,9 @@ interface ItemProp {
 const Card = ({ children, title }:ItemProp) => {
   return (
     <CardContainer>
-      <Title>{title}</Title>
+      <Header>
+        <Title>{title}</Title>
+      </Header>
       <ChildContainer>
         {children}
       </ChildContainer>

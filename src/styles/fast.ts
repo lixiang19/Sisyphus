@@ -54,7 +54,7 @@ const fast = {
   },
   title: {
     ...font.weight.medium,
-    ...font.size.xl,
+    ...font.size.lg,
     ...font.color.black
   },
   label: {
