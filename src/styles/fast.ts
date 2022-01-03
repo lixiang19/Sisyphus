@@ -53,12 +53,17 @@ const fast = {
     }
   },
   title: {
-    ...font.weight.black,
+    ...font.weight.medium,
     ...font.size.xl,
     ...font.color.black
   },
   label: {
-    ...font.weight.normal,
+    ...font.weight.medium,
+    ...font.size.md,
+    ...font.color.neutral[500]
+  },
+  value: {
+    ...font.weight.medium,
     ...font.size.md,
     ...font.color.black
   },

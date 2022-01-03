@@ -4,7 +4,7 @@ const size:Size = {
   sm: '0.12rem',
   md: '0.17rem',
   lg: '0.2rem',
-  xl: '0.3rem',
+  xl: '0.28rem',
   xxl: '0.4rem',
   '1/2': '50%',
   '1/3': '33.33%',

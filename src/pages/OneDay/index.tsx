@@ -4,6 +4,7 @@ import { useRequest } from 'ahooks'
 import { useState, useEffect, useMemo, useRef } from 'react'
 import Card from './components/Card'
 import Habit from './components/Habit'
+import Diet from './components/Diet'
 
 const OneDayBox = styled.div(
   s.height.full,
@@ -13,8 +14,10 @@ const OneDayBox = styled.div(
 )
 const TodoWrapper = styled.div(
   s.width['1/2'],
+  s.height.full,
   s.flex.col.s.s,
-  s.gap.y[10]
+  s.gap.y[10],
+  s.border.right
 )
 const CenterWrapper = styled.div(
   s.flex.col.s.s,
@@ -35,11 +38,15 @@ const OneDay = () => {
         </Card>
       </TodoWrapper>
       <CenterWrapper>
+        <Card title='临时笔记' >
+          ss
+        </Card>
         <Card title='微习惯' >
           <Habit />
         </Card>
+
         <Card title='食谱'>
-        ss
+          <Diet />
         </Card>
         <Card title='享受生活'>
         ss
