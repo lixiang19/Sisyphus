@@ -17,6 +17,7 @@ import z from './styleHelper/z'
 import pseudoClass from './styleHelper/pseudoClass'
 import theme from './theme/theme'
 import fast from './fast'
+
 const s = {
   theme,
   bg,

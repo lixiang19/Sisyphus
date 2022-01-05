@@ -11,30 +11,45 @@ const DreamBox = styled.div(
   s.height.full,
   s.flex.row.s.s
 )
-enum dreamTodo {dream, goal, task, todo }
+
+type TaskType = 'dream' | 'goal' | 'task' | 'todo'
 const FoldList = [
   {
-    key: 'dream'
+    key: 'dream',
+    bg: s.theme.color.gray[200],
+    isFold: false
   },
   {
-    key: 'goal'
+    key: 'goal',
+    bg: s.theme.color.gray[100],
+    isFold: false
   },
   {
-    key: 'task'
+    key: 'task',
+    bg: s.theme.color.gray[50],
+    isFold: false
   },
   {
-    key: 'todo'
+    key: 'todo',
+    bg: s.theme.color.white,
+    isFold: false
   }
 ]
 const Dream = () => {
-  const [foldKey, setFoldKey] = useState('goal')
+  const [foldKey, setFoldKey] = useState<TaskType>('goal')
 
   return (
     <DreamBox>
-      <FoldBox isFold={foldControl[1]}>ss</FoldBox>
-      <FoldBox>ss</FoldBox>
-      <FoldBox>ss</FoldBox>
-      <FoldBox>ss</FoldBox>
+      {FoldList.map(item => (
+        <FoldBox
+          key={item.key}
+          isFold={item.isFold}
+          bg={item.bg}
+          // onClick={() => setFoldKey(item.key)}
+        >
+          {item.key}
+        </FoldBox>
+      ))}
     </DreamBox>
   )
 }
