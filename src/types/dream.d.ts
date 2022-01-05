@@ -3,7 +3,7 @@ type BaseTask = {
   objectId: string,
   priority: number,
   color: string,
-  isCompleted: boolean,
+  status: string,
   name: string,
 }
 type Goal = {
@@ -18,4 +18,4 @@ type Task = {
 type Todo = {
   timeConsuming:number,
   taskFk: Pointer,
-}
+}&BaseTask

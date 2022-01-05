@@ -10,6 +10,7 @@ type Pointer = {
 type BaseBmobItem = {
   objectId: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 type Habit = {
