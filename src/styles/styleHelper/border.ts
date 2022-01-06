@@ -10,6 +10,8 @@ type Border = {
     xxl: IAnyPropObject
     circle: IAnyPropObject,
   },
+  primary: IAnyPropObject,
+  secondary: IAnyPropObject,
   tertiary: IAnyPropObject,
   left: IAnyPropObject,
   right: IAnyPropObject,
@@ -19,7 +21,7 @@ type Border = {
 const border:any = {
   rounded: {
     xs: {
-      borderRadius: '0.125rem'
+      borderRadius: '0.07rem'
     },
     sm: {
       borderRadius: '0.1rem'
@@ -40,6 +42,12 @@ const border:any = {
       borderRadius: '50%'
     }
   },
+  primary: {
+    border: `0.01rem solid ${theme.border.primary}`
+  },
+  secondary: {
+    border: `0.01rem solid ${theme.border.secondary}`
+  },
   tertiary: {
     border: `0.01rem solid ${theme.border.tertiary}`
   },
@@ -59,4 +67,5 @@ const border:any = {
 const proxyRounded = genProxy(border.rounded, 'borderRadius')
 const proxy = genProxy(border, 'border')
 proxy.rounded = proxyRounded
+
 export default proxy as Border

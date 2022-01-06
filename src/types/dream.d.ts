@@ -5,6 +5,8 @@ type BaseTask = {
   color: string,
   status: string,
   name: string,
+  timeConsuming:number,
+  completeTime:BmobDate,
 }
 type Goal = {
   dreamFk: Pointer,
@@ -16,6 +18,7 @@ type Task = {
   timePeriodEnd: BmobDate,
 }&BaseTask
 type Todo = {
-  timeConsuming:number,
   taskFk: Pointer,
 }&BaseTask
+
+type Status = 'ready' | 'inProgress' | 'complete'

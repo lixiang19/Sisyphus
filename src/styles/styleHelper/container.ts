@@ -3,10 +3,18 @@ import { genProxy } from 'src/helpers/type'
 type Container = {
   height: ISizeUse,
   width: ISizeUse,
+  minHeight: ISizeUse,
+  minWidth: ISizeUse,
+  maxHeight: ISizeUse,
+  maxWidth: ISizeUse,
 }
 const container:Container = {
   height: {},
-  width: {}
+  width: {},
+  minHeight: {},
+  minWidth: {},
+  maxHeight: {},
+  maxWidth: {}
 }
 Object.keys(size).forEach(key => {
   container.height[key] = {
@@ -15,11 +23,27 @@ Object.keys(size).forEach(key => {
   container.width[key] = {
     width: size[key]
   }
+  container.minHeight[key] = {
+    minHeight: size[key]
+  }
+  container.minWidth[key] = {
+    minWidth: size[key]
+  }
+  container.maxHeight[key] = {
+    maxHeight: size[key]
+  }
+  container.maxWidth[key] = {
+    maxWidth: size[key]
+  }
 })
 
 const proxy = {
   height: genProxy(container.height, 'height'),
-  width: genProxy(container.width, 'width')
+  width: genProxy(container.width, 'width'),
+  minHeight: genProxy(container.minHeight, 'minHeight'),
+  minWidth: genProxy(container.minWidth, 'minWidth'),
+  maxHeight: genProxy(container.maxHeight, 'maxHeight'),
+  maxWidth: genProxy(container.maxWidth, 'maxWidth')
 }
 
 export default proxy

@@ -10,33 +10,41 @@ const IconCss = s.join(
   s.inset.top[1],
   s.font.size.xl,
   s.cp,
-  s.font.color.primary
+  s.font.color.sky[400]
 
 )
 interface IIconProps {
   isFold:boolean;
+  onClick:()=>void;
 }
-const Icon = ({ isFold }:IIconProps) => {
+const Icon = ({ isFold, onClick }:IIconProps) => {
   return (
-    isFold ? <IconMenuFold css={IconCss}/> : <IconMenuUnfold css={IconCss}/>
+    <>
+      {!isFold ? <IconMenuUnfold css={IconCss} onClick={onClick}/> : ''}
+    </>
+
   )
 }
-const FoldBox = styled.div(
+const FoldBox = styled.div<{bg: IAnyPropObject, isFold:Boolean}>(
+  props => (props.bg),
+  props => (props.isFold ? s.width['2/5'] : s.width['1/5']),
   s.relative,
   s.height.full,
-  s.width[100],
-  s.bg.gray[200]
+  s.transform.all,
+  s.padding.y[3],
+  s.padding.x[3]
 )
 interface FoldProps {
   children?: React.ReactNode;
   isFold: boolean;
-  bg: string;
+  bg: IAnyPropObject;
+  onClick: () => void;
 }
-const Fold = ({ children, isFold, bg }: FoldProps) => {
+const Fold = ({ children, isFold, bg, onClick }: FoldProps) => {
   return (
-    <FoldBox>
+    <FoldBox bg={bg} isFold={isFold}>
       {children}
-      <Icon isFold={isFold}/>
+      {/* <Icon isFold={isFold} onClick={onClick}/> */}
     </FoldBox>
   )
 }

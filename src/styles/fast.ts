@@ -29,29 +29,6 @@ const fast = {
       ...border.rounded.xs
     }
   },
-  hoverCard (shadow :keyof typeof effect.shadow = 'lg') {
-    return {
-      position: 'relative',
-      ...effect.shadow[shadow],
-      ...border.rounded.md,
-      '::after': {
-        content: '""',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        opacity: 0,
-        ...effect.shadow[shadow],
-        ...border.rounded.md,
-        transition: '0.5s',
-        pointerEvents: 'none'
-      },
-      ':hover::after': {
-        opacity: 1
-      }
-    }
-  },
   title: {
     ...font.weight.medium,
     ...font.size.lg,

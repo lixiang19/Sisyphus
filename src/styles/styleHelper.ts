@@ -17,7 +17,7 @@ import z from './styleHelper/z'
 import pseudoClass from './styleHelper/pseudoClass'
 import theme from './theme/theme'
 import fast from './fast'
-
+import transform from './styleHelper/transform'
 const s = {
   theme,
   bg,
@@ -37,6 +37,7 @@ const s = {
   position,
   z,
   pseudoClass,
+  transform,
   ...interactivity,
   ...fast,
   left: inset.left,
@@ -47,6 +48,10 @@ const s = {
   opacity: effect.opacity,
   height: container.height,
   width: container.width,
+  minHeight: container.minHeight,
+  minWidth: container.minWidth,
+  maxHeight: container.maxHeight,
+  maxWidth: container.maxWidth,
   rounded: border.rounded,
   scroll: overflow.scroll,
   absolute: position.absolute,
