@@ -42,7 +42,7 @@ const flex = {
   ...generateFlex(),
   wrap: {
     flexWrap: 'wrap'
-  },
+  } as any,
   grow: {
     flexGrow: 1
   },

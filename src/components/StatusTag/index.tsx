@@ -7,23 +7,23 @@ const ColorMap = {
   inProgress: s.bg.amber[500],
   complete: s.bg.green[600]
 }
-const StatusTagBox = styled.div<{bg:IAnyPropObject}>(
-  s.minWidth[20],
-  s.height[7],
+const StatusTagBox = styled.div<{color:string}>(
+  s.minWidth[2],
+  s.height[5],
   s.font.color.white,
-  s.font.size.md,
+  s.font.size.sm,
   s.flex.row.c.c,
   s.border.rounded.xs,
   s.padding.x[2],
-  props => (props.bg)
+  props => ({ backgroundColor: props.color })
 )
 interface StatusTagProps {
-  bg: IAnyPropObject,
+  color: string,
   children?: React.ReactNode;
 }
-const StatusTag = ({ bg, children }:StatusTagProps) => {
+const StatusTag = ({ color, children }:StatusTagProps) => {
   return (
-    <StatusTagBox bg={bg}>
+    <StatusTagBox color={color}>
       {children}
     </StatusTagBox>
   )

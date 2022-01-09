@@ -59,6 +59,9 @@ const font = {
     wide: {
       letterSpacing: '0.05em'
     }
+  },
+  wrap: {
+    wordWrap: 'break-word'
   }
 }
 
@@ -66,6 +69,7 @@ const proxy = {
   size: genProxy(font.size, 'fontSize'),
   color: genProxy(font.color, 'color'),
   weight: genProxy(font.weight, 'fontWeight'),
-  tracking: genProxy(font.tracking, 'letterSpacing')
+  tracking: genProxy(font.tracking, 'letterSpacing'),
+  wrap: font.wrap as any
 }
 export default proxy

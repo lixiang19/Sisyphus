@@ -39,7 +39,10 @@ interface IMenuItemProp {
 }
 const MenuItem = ({ children, icon, path }: IMenuItemProp) => {
   const [isActive, { setTrue, setFalse }] = useBoolean(false)
+  const a = useHistory()
+
   const history = useLocation()
+
   useEffect(() => {
     if (history.pathname === path) {
       setTrue()

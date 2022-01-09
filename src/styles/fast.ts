@@ -31,23 +31,23 @@ const fast = {
   },
   title: {
     ...font.weight.medium,
-    ...font.size.lg,
-    ...font.color.black
+    ...font.size.lg
+
   },
   label: {
     ...font.weight.medium,
-    ...font.size.md,
-    ...font.color.neutral[500]
+    ...font.size.md
+
   },
   value: {
     ...font.weight.medium,
-    ...font.size.md,
-    ...font.color.black
+    ...font.size.md
+
   },
   text: {
     ...font.weight.normal,
-    ...font.size.sm,
-    ...font.color.black
+    ...font.size.sm
+
   }
 }
 export default fast

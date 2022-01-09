@@ -1,4 +1,4 @@
-type Dream = BaseTask
+type Dream = Omit<BaseTask, 'priority'>
 type BaseTask = {
   objectId: string,
   priority: number,
@@ -7,18 +7,22 @@ type BaseTask = {
   name: string,
   timeConsuming:number,
   completeTime:BmobDate,
+  note?:string,
+  imgUrl?: string
 }
 type Goal = {
-  dreamFk: Pointer,
-  deadline: BmobDate
+  dreamFk: Dream,
+  deadline: BmobDate,
+  deadlineParam: string,
 }&BaseTask
 type Task = {
-  goalFk: Pointer,
-  timePeriodStart: BmobDate,
-  timePeriodEnd: BmobDate,
+  goalFk: Goal,
+  timePeriod: string[],
+  timePeriodStart?: BmobDate,
+  timePeriodEnd?: BmobDate,
 }&BaseTask
 type Todo = {
-  taskFk: Pointer,
+  taskFk: Task,
 }&BaseTask
 
 type Status = 'ready' | 'inProgress' | 'complete'

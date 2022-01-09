@@ -4,4 +4,5 @@ type Diet = {
   breakfast: string,
   lunch: string,
   dinner: string,
+  sports: string,
 }

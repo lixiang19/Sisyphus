@@ -12,7 +12,9 @@ const HomeBox = styled.div(
 )
 
 const ContentBox = styled.div(
-  s.padding.all[3]
+  s.padding.all[3],
+  s.w.full,
+  s.h['100vh']
 )
 
 interface IHomeProps {
@@ -25,7 +27,7 @@ const Home = ({ children }:IHomeProps) => {
         <MenuItem path='/' icon={<IconThunderbolt />}>
             我的一天
         </MenuItem>
-        <MenuItem path='dream' icon={<IconApps/>}>
+        <MenuItem path='/dream' icon={<IconApps/>}>
             任务管理
         </MenuItem>
       </Menu>

@@ -8,6 +8,10 @@ import api from 'src/api'
 const HabitItemBox = styled.div(
   s.flex.row.s.c,
   s.gap.x[3],
+  s.font.color.white,
+  {
+    flexShrink: 1
+  },
   {
     '& > span': s.join(
       s.relative,
@@ -33,7 +37,7 @@ const HabitItem = ({ children, dateHabitRelationJoin }: IHabitItem) => {
   return (
     <HabitItemBox>
       <span css={s.label}>{dateHabitRelationJoin.habitFk.name}:</span>
-      <Rate value={rate} onChange={handleRateChange} count={3} tooltips={['😊完成了习惯打卡', '😘厉害！更进一步', '😍非常棒！超越自我']}></Rate>
+      <Rate value={rate} onChange={handleRateChange} count={3} tooltips={['😊完成了习惯打卡😊' + desc[1], '😘厉害！更进一步😘' + desc[2], '😍非常棒！超越自我😍' + desc[3]]}></Rate>
       <span css={s.text}>{desc[rate]}</span>
     </HabitItemBox>
   )
@@ -41,7 +45,6 @@ const HabitItem = ({ children, dateHabitRelationJoin }: IHabitItem) => {
 
 const HabitBox = styled.div(
   s.flex.col.s.s,
-  s.gap.y[2],
   s.width[80]
 )
 const Habit = () => {

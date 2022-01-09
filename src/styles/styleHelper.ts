@@ -18,8 +18,12 @@ import pseudoClass from './styleHelper/pseudoClass'
 import theme from './theme/theme'
 import fast from './fast'
 import transform from './styleHelper/transform'
+import size from './styleHelper/size'
+import animation from './animation'
+import gradient from './styleHelper/gradient'
 const s = {
   theme,
+  size,
   bg,
   border,
   container,
@@ -38,6 +42,8 @@ const s = {
   z,
   pseudoClass,
   transform,
+  animation,
+  gradient,
   ...interactivity,
   ...fast,
   left: inset.left,
@@ -48,18 +54,33 @@ const s = {
   opacity: effect.opacity,
   height: container.height,
   width: container.width,
+  h: container.height,
+  w: container.width,
   minHeight: container.minHeight,
   minWidth: container.minWidth,
   maxHeight: container.maxHeight,
   maxWidth: container.maxWidth,
   rounded: border.rounded,
-  scroll: overflow.scroll,
   absolute: position.absolute,
   relative: position.relative,
   fixed: position.fixed,
   sticky: position.sticky,
   margin: space.margin,
+  m: space.margin.all,
+  mt: space.margin.t,
+  mr: space.margin.r,
+  mb: space.margin.b,
+  ml: space.margin.l,
+  mx: space.margin.x,
+  my: space.margin.y,
   padding: space.padding,
+  p: space.padding.all,
+  pt: space.padding.t,
+  pr: space.padding.r,
+  pb: space.padding.b,
+  pl: space.padding.l,
+  px: space.padding.x,
+  py: space.padding.y,
   hover: pseudoClass.hover,
   join: fast.join
 }

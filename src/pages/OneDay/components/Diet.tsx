@@ -6,9 +6,10 @@ import { Descriptions } from '@arco-design/web-react'
 import api from 'src/api'
 
 const DietBox = styled.div(
-  s.flex.row.sb.c,
-
-  s.width[80]
+  s.flex.col.s.s,
+  s.width[20],
+  s.gap.y[5],
+  s.py[4]
 )
 const DescriptionItemBox = styled.div(
   s.flex.row.s.s,
@@ -22,8 +23,8 @@ interface IDescriptionItem {
 const DescriptionItem = ({ children, label, value }: IDescriptionItem) => {
   return (
     <DescriptionItemBox>
-      <span css={s.label}>{label}</span>
-      <span css={s.value}>{value}</span>
+      <span css={{ ...s.label, ...s.font.color.white }}>{label}</span>
+      <span css={{ ...s.value, ...s.font.color.white }}>{value}</span>
     </DescriptionItemBox>
   )
 }
@@ -41,6 +42,10 @@ const Diet = () => {
     {
       label: '晚餐',
       value: data?.dinner
+    },
+    {
+      label: '运动',
+      value: data?.sports
     }
   ]
   return (

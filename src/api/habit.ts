@@ -26,6 +26,7 @@ const findTodayHabitRelationJoin = async () => {
 const findDateHabitRelation = async (dateId: string) => {
   const query = Bmob.Query('date_habit_relation')
   query.equalTo('dateFk', '==', dateId)
+  query.include('dateFk', 'habitFk')
   return gen<DateHabitRelation[]>(query.find())
 }
 const addDateHabitRelation = async (habitId: string, dateId: string) => {

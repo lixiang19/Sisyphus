@@ -2,7 +2,7 @@
 const size:Size = {
   xs: '0.075rem',
   sm: '0.12rem',
-  md: '0.17rem',
+  md: '0.16rem',
   lg: '0.22rem',
   xl: '0.3rem',
   xxl: '0.4rem',

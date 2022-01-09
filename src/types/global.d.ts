@@ -15,7 +15,8 @@ interface Window {
   node: {
     eventBus: EventEmitter
   }
-  eventBus: EventEmitter
+  eventBus: EventEmitter,
+  width:any
 }
 type VSCode = {
   postMessage(message: any): void;

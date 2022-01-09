@@ -18,3 +18,4 @@ function isObjectValueEqual(a, b) {
   return true
 }
 export default isObjectValueEqual
+console.log(new URLSearchParams('?dreamId=a'))

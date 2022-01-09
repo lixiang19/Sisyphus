@@ -3,13 +3,15 @@ import { genProxy } from 'src/helpers/type'
 type IGap = {
   x:Partial<ISizeUse>,
   y:Partial<ISizeUse>,
-}&Partial<ISizeUse>
+  all:Partial<ISizeUse>,
+}
 const gap:IGap = {
   x: {},
-  y: {}
+  y: {},
+  all: {}
 }
 Object.keys(size).forEach(key => {
-  gap[key] = {
+  gap.all[key] = {
     gap: size[key]
   }
   gap.x[key] = {

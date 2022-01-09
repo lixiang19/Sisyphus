@@ -6,10 +6,10 @@ type Space = {
 }
 
 const map:Pos&any = {
-  t: 'top',
-  r: 'right',
-  b: 'bottom',
-  l: 'left'
+  t: 'Top',
+  r: 'Right',
+  b: 'Bottom',
+  l: 'Left'
 }
 const space:Space = {
   margin: {
@@ -61,10 +61,10 @@ Object.keys(size).forEach(key => {
       }
     } else {
       space.margin[pos][key] = {
-        [`margin-${map[pos]}`]: size[key]
+        [`margin${map[pos]}`]: size[key]
       }
       space.padding[pos][key] = {
-        [`padding-${map[pos]}`]: size[key]
+        [`padding${map[pos]}`]: size[key]
       }
     }
   })

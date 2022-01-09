@@ -6,16 +6,17 @@ const overflow = {
     overflow: 'visible'
   },
   x: {
-    overflowX: 'auto'
+    overflowX: 'auto',
+    overflowY: 'hidden'
   },
   y: {
+    overflowX: 'hidden',
     overflowY: 'auto'
-  },
+  } as any,
   hidden: {
     overflow: 'hidden'
   },
-  scroll: {
-    overflow: 'scroll',
+  scrollBar: {
     '&::-webkit-scrollbar': {
       width: '0.03rem'
     },
@@ -25,7 +26,7 @@ const overflow = {
     },
     '&::-webkit-scrollbar-thumb': {
       borderRadius: '0.03rem',
-      background: 'rgba(0, 120, 212, 0.4)'
+      background: 'rgba(167, 139, 250, 0.4)'
     }
   }
 }

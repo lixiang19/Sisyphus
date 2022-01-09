@@ -5,21 +5,25 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import { IconPlusCircle } from '@arco-design/web-react/icon'
 
 const AddButtonBox = styled.div(
+  s.cp,
   s.width.full,
-  s.height[10],
+  s.height[8],
   s.flex.row.c.c,
   s.border.rounded.md,
-  s.bg.transparent,
+  s.bg.sky[100],
   s.gap.x[3],
   s.font.size.md,
-  s.font.color.gray[500],
-  s.font.weight.thin,
-  s.margin.t[3],
-  s.border.secondary
+  s.font.color.sky[500],
+  s.font.weight.bold,
+  s.my[2]
+  // s.border.secondary
 )
-const AddButton = () => {
+interface AddButtonProps {
+  onClick: () => void;
+}
+const AddButton = ({ onClick }:AddButtonProps) => {
   return (
-    <AddButtonBox>
+    <AddButtonBox onClick={onClick}>
       <IconPlusCircle />
       创建
     </AddButtonBox>
