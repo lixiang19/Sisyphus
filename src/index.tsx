@@ -2,7 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+function setRem () {
+  const docEl = document.documentElement
+  const clientWidth = docEl.clientWidth
 
+  if (!clientWidth) {
+    return
+  }
+  docEl.style.fontSize = 100 * (clientWidth / 2560) + 'px'
+}
+setRem()
 ReactDOM.render(
 
   <App />,

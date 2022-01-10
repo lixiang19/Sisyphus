@@ -7,7 +7,6 @@
   "dependencies": {
     "@ahooksjs/use-url-state": "^3.1.5",
     "@arco-design/web-react": "^2.26.2",
-    "@chakra-ui/react": "^1.7.3",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@testing-library/jest-dom": "^5.11.4",
@@ -20,7 +19,6 @@
     "concurrently": "^6.4.0",
     "dayjs": "^1.10.6",
     "electron-devtools-installer": "^3.2.0",
-    "framer-motion": "^4.1.17",
     "hydrogen-js-sdk": "^2.2.51",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
@@ -29,8 +27,6 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "tailwindcss": "^3.0.7",
-    "twin.macro": "^2.8.2",
     "typescript": "^4.1.2",
     "wait-on": "^6.0.0",
     "web-vitals": "^1.0.1"
@@ -42,13 +38,18 @@
     "build": "npm run react-build && npm run electron-build",
     "release": "npm run react-build && npm run electron-release",
     "electron-start": "electron . dev",
-    "electron-build": "electron-builder",
+    "electron-build-test": "electron-builder",
+    "electron-build": "mkdir build/src && cp -r electron/. build/electron",
+    "build-electron-win": "mkdir build\\src && Xcopy /E /I /Y electron build\\electron",
     "electron-release": "electron-builder --publish=always",
+    "package": "npm run build && npm run build-electron && electron-builder build -c.extraMetadata.main=build/electron/main.js --publish never",
     "react-start": "set PORT=8000 && react-app-rewired start",
     "react-build": "react-app-rewired build",
-    "react-serve": "SET BROWSER=none&&npm run react-start"
+    "react-serve": "SET BROWSER=none && npm run react-start",
+    "package-win": "npm run build && npm run build-electron-win && electron-builder build -c.extraMetadata.main=build/electron/main.js --publish never"
   },
   "build": {
+    "extends": null,
     "productName": "habit",
     "appId": "1222",
     "directories": {

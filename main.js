@@ -23,10 +23,10 @@ function createDevTools() {
     REACT_DEVELOPER_TOOLS
   } = require('electron-devtools-installer')
   // 安装devtron
-  const devtronExtension = require('devtron')
-  devtronExtension.install()
-  // 安装React开发者工具
-  installExtension(REACT_DEVELOPER_TOOLS)
+  // const devtronExtension = require('devtron')
+  // devtronExtension.install()
+  // // 安装React开发者工具
+  // installExtension(REACT_DEVELOPER_TOOLS)
 }
 
 // createWindow()方法来将index.html加载进一个新的BrowserWindow实例。
@@ -41,7 +41,7 @@ function createWindow() {
   }
   mainWindow = new BrowserWindow(windowOptions)
   // 判断是否是开发模式
-  if (mode === 'dev') {
+  if (!app.isPackaged) {
     mainWindow.loadURL('http://localhost:8000/') // http://localhost:8002/ 前端开发环境地址
     mainWindow.webContents.openDevTools() // 自动打开控制台
     createDevTools()
