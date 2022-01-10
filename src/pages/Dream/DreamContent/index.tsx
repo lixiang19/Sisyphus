@@ -16,6 +16,18 @@ const DreamBox = styled.div(
   s.width[72],
   s.flex.col.s.c,
   s.gap.y[4]
+
+)
+const ActiveItem = styled.div(
+  s.w[72],
+  s.h[20],
+  s.font.size.xl,
+  s.font.color.white,
+  s.flex.row.c.c,
+  s.card(),
+  {
+    borderRight: '1px solid black'
+  }
 )
 const Dream = () => {
   const [urlObj, setUrlObj] = useUrlState({})
@@ -45,6 +57,7 @@ const Dream = () => {
   return (
     <DreamBox>
       <AddButton onClick={setTrue}></AddButton>
+      {/* <ActiveItem>编程高手</ActiveItem> */}
       {data && data.map((item) => {
         return (
           <BaseCard onClick={() => handleCard(item.objectId)} key={item.objectId} {...item}></BaseCard>

@@ -9,12 +9,13 @@ const ColorMap = {
 }
 const StatusTagBox = styled.div<{color:string}>(
   s.minWidth[2],
-  s.height[5],
+  // s.height[5],
   s.font.color.white,
   s.font.size.sm,
   s.flex.row.c.c,
   s.border.rounded.xs,
   s.padding.x[2],
+  s.py[1],
   props => ({ backgroundColor: props.color })
 )
 interface StatusTagProps {

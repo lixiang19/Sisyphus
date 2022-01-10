@@ -52,7 +52,7 @@ const findGoal = async (goalId:string) => {
 }
 const findGoalByDream = async (dreamId:string) => {
   const query = Bmob.Query('goal')
-  query.equalTo('dreamFk', '==', dreamId)
+  dreamId && query.equalTo('dreamFk', '==', dreamId)
   query.include('dreamFk')
   return gen<Goal[]>(query.find())
 }
@@ -98,7 +98,7 @@ const findAllTask = async () => {
 }
 const findTaskByGoal = async (goalId:string) => {
   const query = Bmob.Query('task')
-  query.equalTo('goalFk', '==', goalId)
+  goalId && query.equalTo('goalFk', '==', goalId)
   query.include('goalFk')
   return gen<Task[]>(query.find())
 }
@@ -160,9 +160,7 @@ const findTodo = async (todoId:string) => {
 }
 const findTodoByTask = async (taskId:string, status:string = 'ready') => {
   const query = Bmob.Query('todo')
-  if (taskId) {
-    query.equalTo('taskFk', '==', taskId)
-  }
+  taskId && query.equalTo('taskFk', '==', taskId)
   query.equalTo('status', '!=', 'complete')
   query.equalTo('status', '==', status)
   query.include('taskFk')

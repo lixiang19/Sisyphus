@@ -45,7 +45,12 @@ const Goal = () => {
     })
   }
   function handleCard (objectId:string) {
-    setUrlObj({ goalId: objectId })
+    const currentGoadId = urlObj.goalId
+    if (currentGoadId === objectId) {
+      setUrlObj({ goalId: null })
+    } else {
+      setUrlObj({ goalId: objectId })
+    }
   }
   return (
     <GoalBox>
