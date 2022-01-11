@@ -20,14 +20,14 @@ const Bookmark = styled.div<{isFold:Boolean}>(
 
 const FoldBox = styled.div<{bg: IAnyPropObject, isFold:Boolean, width:number}>(
   props => (props.bg),
-  props => (props.isFold ? s.width[160] : s.width[props.width]),
+  props => (props.isFold ? s.width[180] : s.width[props.width]),
   props => (props.isFold ? { flexGrow: 1 } : s.width[props.width]),
   // s.width[80],
   s.relative,
   s.height.full,
   s.transform.all,
   // s.padding.y[3],
-  s.padding.x[4],
+  s.padding.x[10],
   s.pb[4],
   s.flex.col.s.s,
   s.overflow.scrollBar,
@@ -40,7 +40,7 @@ interface FoldProps {
   bg: IAnyPropObject;
   onClick: () => void;
 }
-const Fold = ({ children, isFold, bg, width = 80, onClick }: FoldProps) => {
+const Fold = ({ children, isFold, bg, width = 92, onClick }: FoldProps) => {
   return (
     <FoldBox bg={bg} isFold={isFold} width={width}>
       <Bookmark isFold={isFold} onClick={onClick}></Bookmark>

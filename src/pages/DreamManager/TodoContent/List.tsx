@@ -9,9 +9,10 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 const ListWrapper = styled.div(
   s.h.full,
+  s.w.full,
   s.pb[4],
   s.overflow.y,
-  s.overflow.scrollBar
+  s.overflow.scrollBarNone
 )
 const Item = styled.div(
   s.h[10],

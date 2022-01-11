@@ -8,11 +8,12 @@ import { genStatus, genPriority } from 'src/helpers/bmob'
 import dayjs from 'dayjs'
 const Header = styled.div(
   s.width.full,
-  s.height[10],
+  s.minHeight[10],
   s.font.color.neutral[800],
-  s.font.size.lg,
-  s.flex.row.s.c,
-  s.gap.x[3]
+  s.font.size.xl,
+  s.flex.row.s.s,
+  s.gap.x[3],
+  s.pt[4]
 )
 const Bottom = styled.div(
   s.width.full,
@@ -21,15 +22,16 @@ const Bottom = styled.div(
   s.font.size.lg,
   s.flex.row.s.c,
   s.flex.wrap,
-  s.gap.x[3],
-  s.gap.y[2],
-  s.py[2]
+  s.gap.x[4],
+  s.gap.y[3],
+  s.pt[4],
+  s.pb[2]
 )
 
 const ContentBox = styled.div(
   s.width.full,
-  s.minHeight[10],
-  s.margin.y[1],
+  s.minHeight[30],
+  s.margin.y[6],
   s.overflow.hidden,
   s.border.rounded.xs,
   s.font.size.sm,
@@ -50,12 +52,11 @@ const BaseCardBox = styled.div<{isActive: boolean}>(
   s.flex.col.s.s,
   s.padding.x[3],
   s.transform.all,
-  props => (props.isActive ? { borderRight: `0.1rem solid ${s.theme.color.primary}` } : ''),
+  props => (props.isActive ? { borderRight: `0.01rem solid ${s.theme.color.primary}` } : ''),
   s.hover(
     s.card('lg'),
     {
       img: {
-
         transform: 'scale(1.1)'
       }
     }

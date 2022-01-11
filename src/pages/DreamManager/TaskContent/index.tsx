@@ -12,7 +12,19 @@ import Dialog from 'src/components/Dialog'
 const { RangePicker } = DatePicker
 
 const Option = Select.Option
-
+const ActiveItem = styled.div(
+  s.w[72],
+  s.h[20],
+  s.font.size.xl,
+  s.font.color.white,
+  s.flex.row.c.c,
+  s.card(),
+  s.cp,
+  s.bg.primary
+  // {
+  //   borderRight: `0.1em solid ${s.theme.color.primary}`
+  // }
+)
 const FormItem = Form.Item
 const TaskBox = styled.div(
   s.width[72],
@@ -22,6 +34,8 @@ const TaskBox = styled.div(
 const Task = () => {
   const [urlObj, setUrlObj] = useUrlState({ dreamId: '', goalId: '', taskId: '' })
   const goalId = urlObj.goalId
+  const taskId = urlObj.taskId
+  console.log('🚀 ~ file: index.tsx ~ line 36 ~ Task ~ taskId', taskId)
 
   // useRequest
   const [form] = Form.useForm()
@@ -45,15 +59,23 @@ const Task = () => {
     })
   }
   function handleCard (objectId:string) {
-    setUrlObj({ taskId: objectId })
+    if (taskId === objectId) {
+      setUrlObj({ taskId: null })
+    } else {
+      setUrlObj({ taskId: objectId })
+    }
+  }
+  function cancelActive () {
+    setUrlObj({ taskId: null })
+  }
+  const list = () => {
+    return data && data.map((item) => (
+      <BaseCard onClick={() => handleCard(item.objectId)} key={item.objectId} {...item}></BaseCard>
+    ))
   }
   return (
     <TaskBox>
-      {data && data.map((item) => {
-        return (
-          <BaseCard onClick={() => handleCard(item.objectId)} key={item.objectId} {...item}></BaseCard>
-        )
-      })}
+      {taskId ? <ActiveItem onClick={cancelActive}>完成第一版打包</ActiveItem> : list()}
 
       <AddButton onClick={setTrue}></AddButton>
       <Dialog visible={visible} onOk={handleConfirm} onCancel={setFalse}>

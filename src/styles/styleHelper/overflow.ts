@@ -16,6 +16,11 @@ const overflow = {
   hidden: {
     overflow: 'hidden'
   },
+  scrollBarNone: {
+    '&::-webkit-scrollbar': {
+      width: '0'
+    }
+  },
   scrollBar: {
     '&::-webkit-scrollbar': {
       width: '0.03rem'
