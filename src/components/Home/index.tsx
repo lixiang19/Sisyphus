@@ -27,8 +27,20 @@ const Home = ({ children }:IHomeProps) => {
         <MenuItem path='/' icon={<IconThunderbolt />}>
             我的一天
         </MenuItem>
-        <MenuItem path='/dream' icon={<IconApps/>}>
+        <MenuItem path='/dreamManager' icon={<IconApps/>}>
             任务管理
+        </MenuItem>
+        <MenuItem path='/a' icon={<IconApps/>}>
+            燃烧日程
+        </MenuItem>
+        <MenuItem path='/b' icon={<IconApps/>}>
+            任务
+        </MenuItem>
+        <MenuItem path='/c' icon={<IconApps/>}>
+            目标
+        </MenuItem>
+        <MenuItem path='/dream' icon={<IconApps/>}>
+            梦想
         </MenuItem>
       </Menu>
       <ContentBox>

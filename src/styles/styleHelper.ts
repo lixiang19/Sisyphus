@@ -32,6 +32,9 @@ const s = {
   flex,
   grid,
   font,
+  fs: font.size,
+  fc: font.color,
+  fw: font.weight,
   gap,
   inset,
   interactivity,
@@ -40,7 +43,7 @@ const s = {
   space,
   position,
   z,
-  pseudoClass,
+  ...pseudoClass,
   transform,
   animation,
   gradient,
@@ -81,7 +84,6 @@ const s = {
   pl: space.padding.l,
   px: space.padding.x,
   py: space.padding.y,
-  hover: pseudoClass.hover,
   join: fast.join
 }
 export default s

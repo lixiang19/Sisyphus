@@ -5,7 +5,7 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import Card from './components/Card'
 import Habit from './components/Habit'
 import Diet from './components/Diet'
-import TodoContent from '../Dream/TodoContent'
+import TodoContent from '../DreamManager/TodoContent'
 const OneDayBox = styled.div(
   s.height.full,
   s.width.full,

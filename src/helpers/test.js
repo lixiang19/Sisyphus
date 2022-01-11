@@ -19,3 +19,5 @@ function isObjectValueEqual(a, b) {
 }
 export default isObjectValueEqual
 console.log(new URLSearchParams('?dreamId=a'))
+const a = ('avc')
+console.log('🚀 ~ file: test.js ~ line 23 ~ a', a)

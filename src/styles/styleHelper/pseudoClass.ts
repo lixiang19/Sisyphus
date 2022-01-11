@@ -3,6 +3,14 @@ const pseudoClass = {
     return {
       ':hover': Object.assign({}, ...args)
     }
+  },
+  before (...args: any[]) {
+    return {
+      '::before': Object.assign({
+        content: '""',
+        display: 'block'
+      }, ...args)
+    }
   }
 }
 export default pseudoClass
