@@ -19,5 +19,12 @@ function isObjectValueEqual(a, b) {
 }
 export default isObjectValueEqual
 console.log(new URLSearchParams('?dreamId=a'))
+
 const a = ('avc')
-console.log('🚀 ~ file: test.js ~ line 23 ~ a', a)
+const b = ('aaa')
+function tag(stringArr, ...values) {
+  console.log('🚀 ~ file: test.js ~ line 26 ~ tag ~ values', values)
+  console.log('🚀 ~ file: test.js ~ line 26 ~ tag ~ stringArr', stringArr)
+  // ...
+}
+tag`const a = 1 ${a} c ${b}`

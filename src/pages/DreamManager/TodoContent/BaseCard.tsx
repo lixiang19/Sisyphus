@@ -75,11 +75,11 @@ const Tomato = ({ children }: ITomato) => {
 const BaseCardBox = styled.div<{isActive?: boolean, isCompleted:boolean}>(
   s.mb[4],
   s.cp,
-  s.card(),
+  s.card,
   s.flex.row.s.sh,
   s.transform.all,
   s.hover(
-    s.card('lg'),
+    s.card.lg,
     {
       img: {
         transform: 'scale(1.1)'

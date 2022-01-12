@@ -46,13 +46,13 @@ const ContentBox = styled.div(
 const BaseCardBox = styled.div<{isActive: boolean}>(
   s.width[72],
   s.cp,
-  s.card(),
+  s.card,
   s.flex.col.s.s,
   s.padding.x[3],
   s.transform.all,
   props => (props.isActive ? { borderRight: `0.1rem solid ${s.theme.color.primary}` } : ''),
   s.hover(
-    s.card('lg'),
+    s.card.lg,
     {
       img: {
 

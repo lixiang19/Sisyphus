@@ -2,6 +2,29 @@ import effect from './styleHelper/effect'
 import theme from './theme/theme'
 import font from './styleHelper/font'
 import border from './styleHelper/border'
+type TypeCard = {
+  boxShadow: string
+  backgroundColor: string
+  borderRadius?: string
+  lg?:IAnyPropObject
+}
+const card:TypeCard = {
+  backgroundColor: theme.color.white,
+  ...effect.shadow.md,
+  ...border.rounded.xs
+}
+const cardProxy = new Proxy(card, {
+  get: function (target:any, propKey:any) {
+    if (propKey === 'lg') {
+      return {
+        backgroundColor: theme.color.white,
+        ...effect.shadow.lg,
+        ...border.rounded.xs
+      }
+    }
+    return target[propKey]
+  }
+})
 const fast = {
   join (...args: any[]) {
     return Object.assign({}, ...args)
@@ -22,13 +45,14 @@ const fast = {
       textOverflow: 'ellipsis'
     }
   },
-  card (shadow :keyof typeof effect.shadow = 'md') {
-    return {
-      backgroundColor: theme.color.white,
-      ...effect.shadow[shadow],
-      ...border.rounded.xs
-    }
-  },
+  // card (shadow :keyof typeof effect.shadow = 'md') {
+  //   return {
+  //     backgroundColor: theme.color.white,
+  //     ...effect.shadow[shadow],
+  //     ...border.rounded.xs
+  //   }
+  // },
+  card: cardProxy,
   title: {
     ...font.weight.medium,
     ...font.size.lg
@@ -49,5 +73,6 @@ const fast = {
     ...font.size.sm
 
   }
+
 }
 export default fast

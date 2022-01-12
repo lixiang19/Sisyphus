@@ -18,7 +18,7 @@ const ActiveItem = styled.div(
   s.font.size.xl,
   s.font.color.white,
   s.flex.row.c.c,
-  s.card(),
+  s.card,
   s.cp,
   s.bg.primary
   // {

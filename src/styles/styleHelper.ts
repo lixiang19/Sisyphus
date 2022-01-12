@@ -86,4 +86,27 @@ const s = {
   py: space.padding.y,
   join: fast.join
 }
+console.log('ss', s.card)
+export function x (args:any, ...values:any) {
+  const list = args[0].split(' ')
+
+  const cssObject = {}
+  list.forEach((item:any, index:any) => {
+    if (!item) {
+      return
+    }
+    const strs = item.trim().match(/[a-zA-Z]+|[0-9]+/g)
+    if (!strs) {
+      return
+    }
+    const res = strs.reduce((acc:any, cur:any) => {
+      return acc[cur]
+    }, s)
+    console.log(res)
+    Object.assign(cssObject, res)
+  })
+
+  return cssObject
+}
+
 export default s

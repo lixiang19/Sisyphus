@@ -24,7 +24,7 @@ const ActiveItem = styled.div(
   s.font.size.xl,
   s.font.color.white,
   s.flex.row.c.c,
-  s.card(),
+  s.card,
   {
     borderRight: '1px solid black'
   }
