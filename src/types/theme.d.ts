@@ -56,6 +56,10 @@ type ColorUse = {
 }
 interface BaseColor {
   primary: string,
+  danger: string,
+  info: string,
+  success: string,
+  warning: string,
   white: string,
   black: string,
   transparent: string,

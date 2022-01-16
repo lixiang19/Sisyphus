@@ -86,7 +86,7 @@ const s = {
   py: space.padding.y,
   join: fast.join
 }
-console.log('ss', s.card)
+
 export function x (args:any, ...values:any) {
   const list = args[0].split(' ')
 
@@ -102,7 +102,7 @@ export function x (args:any, ...values:any) {
     const res = strs.reduce((acc:any, cur:any) => {
       return acc[cur]
     }, s)
-    console.log(res)
+
     Object.assign(cssObject, res)
   })
 

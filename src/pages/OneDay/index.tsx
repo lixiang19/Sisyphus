@@ -10,7 +10,8 @@ const OneDayBox = styled.div(
   s.height.full,
   s.width.full,
   s.flex.row.s.s,
-  s.gap.x[4]
+  s.gap.x[4],
+  s.padding.all[4]
 )
 const LeftWrapper = styled.div(
   s.h.full,

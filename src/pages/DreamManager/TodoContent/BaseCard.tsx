@@ -4,7 +4,7 @@ import { useBoolean, useRequest, useTimeout } from 'ahooks'
 import { useState, useEffect, useMemo, useRef, forwardRef } from 'react'
 import useUrlState from '@ahooksjs/use-url-state'
 import StatusTag from 'src/components/StatusTag'
-import { genPriority, genStatus } from 'src/helpers/bmob'
+import { genPriorityTag, genStatusTag } from 'src/helpers/bmob'
 import { useQuery } from 'src/helpers/hooks'
 import dayjs from 'dayjs'
 import { IconArrowRight, IconPlayCircleFill } from '@arco-design/web-react/icon'
@@ -98,9 +98,9 @@ type BaseCardProps = {
 }&Todo
 const BaseCard = ({ name, imgUrl, note, status, priority, timeConsuming, objectId, taskFk, innerRef, provided, onClick, refresh, ...others }:BaseCardProps) => {
   const [isCompleted, { setTrue }] = useBoolean(false)
-  const statusDetail = genStatus(status)
-  const priorityDetail = genPriority(priority)
-  const { run } = useRequest(api.dream.completeTodo, {
+  const statusDetail = genStatusTag(status)
+  const priorityDetail = genPriorityTag(priority)
+  const { run } = useRequest(api.dreamManager.completeTodo, {
     manual: true,
     onSuccess: () => {
       refresh()

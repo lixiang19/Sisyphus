@@ -4,7 +4,7 @@ import { useRequest } from 'ahooks'
 import { useState, useEffect, useMemo, useRef } from 'react'
 import useUrlState from '@ahooksjs/use-url-state'
 import StatusTag from 'src/components/StatusTag'
-import { genStatus } from 'src/helpers/bmob'
+import { genStatusTag } from 'src/helpers/bmob'
 import { useQuery } from 'src/helpers/hooks'
 const Header = styled.div(
   s.width.full,
@@ -65,7 +65,7 @@ type BaseCardProps = {
   onClick:()=>void
 }&Dream
 const BaseCard = ({ name, imgUrl, note, status, timeConsuming, objectId, onClick, ...others }:BaseCardProps) => {
-  const statusDetail = genStatus(status)
+  const statusDetail = genStatusTag(status)
   const [urlObj] = useUrlState({ dreamId: '' })
   const dreamId = urlObj.dreamId
   const isActive = useMemo(() => dreamId === objectId, [dreamId])

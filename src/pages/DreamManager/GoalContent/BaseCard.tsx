@@ -4,7 +4,7 @@ import { useRequest } from 'ahooks'
 import { useState, useEffect, useMemo, useRef } from 'react'
 import StatusTag from 'src/components/StatusTag'
 import useUrlState from '@ahooksjs/use-url-state'
-import { genStatus, genPriority } from 'src/helpers/bmob'
+import { genStatusTag, genPriorityTag } from 'src/helpers/bmob'
 import dayjs from 'dayjs'
 const Header = styled.div(
   s.width.full,
@@ -67,8 +67,8 @@ type BaseCardProps = {
 }&Goal
 
 const BaseCard = ({ name, imgUrl, note, status, timeConsuming, priority, dreamFk, onClick, deadline, objectId, ...others }:BaseCardProps) => {
-  const statusDetail = genStatus(status)
-  const priorityDetail = genPriority(priority)
+  const statusDetail = genStatusTag(status)
+  const priorityDetail = genPriorityTag(priority)
   const [urlObj] = useUrlState({ dreamId: '', goalId: '' })
   const goalId = urlObj.goalId
   const isActive = useMemo(() => goalId === objectId, [goalId])

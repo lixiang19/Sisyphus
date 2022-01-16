@@ -25,15 +25,15 @@ const Todo = () => {
   const [urlObj, setUrlObj] = useUrlState({ dreamId: '', taskId: '' })
   const taskId = urlObj.taskId
 
-  const findApiInprogress = () => api.dream.findTodoByTask(taskId, 'inProgress')
-  const findApiReady = () => api.dream.findTodoByTask(taskId, 'ready')
+  const findApiInprogress = () => api.dreamManager.findTodoByTask(taskId, 'inProgress')
+  const findApiReady = () => api.dreamManager.findTodoByTask(taskId, 'ready')
   const { data: inProgressList, refresh: inProgressRefresh } = useRequest(findApiInprogress, {
     refreshDeps: [taskId]
   })
   const { data: readyList, refresh: readyRefresh } = useRequest(findApiReady, {
     refreshDeps: [taskId]
   })
-  const { run } = useRequest(api.dream.updateTodoStatus, {
+  const { run } = useRequest(api.dreamManager.updateTodoStatus, {
     manual: true
   })
   function onDragEnd (result: any, provided: any) {
@@ -49,10 +49,10 @@ const Todo = () => {
     <TodoBox>
       <DragDropContext onDragEnd={onDragEnd}>
         <StatusWrapper title='进行中' count={inProgressList?.length}>
-          <Control keyId='inProgress' id={taskId} addApi={api.dream.addTodo} statusInitialValue='inProgress' listData={inProgressList} refresh={inProgressRefresh}></Control>
+          <Control keyId='inProgress' id={taskId} addApi={api.dreamManager.addTodo} statusInitialValue='inProgress' listData={inProgressList} refresh={inProgressRefresh}></Control>
         </StatusWrapper>
         <StatusWrapper title='待开始' count={readyList?.length}>
-          <Control keyId='ready' id={taskId} addApi={api.dream.addTodo} statusInitialValue='ready' listData={readyList} refresh={readyRefresh}></Control>
+          <Control keyId='ready' id={taskId} addApi={api.dreamManager.addTodo} statusInitialValue='ready' listData={readyList} refresh={readyRefresh}></Control>
         </StatusWrapper>
 
       </DragDropContext>

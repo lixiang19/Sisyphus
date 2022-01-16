@@ -34,8 +34,8 @@ const Dream = () => {
 
   // useRequest
   const [form] = Form.useForm()
-  const { data, refresh } = useRequest(api.dream.findAllDream)
-  const { run } = useRequest(api.dream.addDream, {
+  const { data, refresh } = useRequest(api.dreamManager.findAllDream)
+  const { run } = useRequest(api.dreamManager.addDream, {
     manual: true,
     onSuccess: () => {
       refresh()

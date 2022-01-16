@@ -2,10 +2,10 @@ import React from 'react'
 import { renderRoutes } from 'react-router-config'
 import routes from 'src/routes/index'
 import Home from 'src/components/Home'
-import '@arco-design/web-react/dist/css/arco.css'
+import '@arco-design/web-react/dist/css/arco-rem.css'
 import 'src/styles/reset.css'
 import api from 'src/api'
-
+// import s, { x } from 'src/styles/styleHelper'
 import { HashRouter as Router } from 'react-router-dom'
 
 import { useRequest } from 'ahooks'

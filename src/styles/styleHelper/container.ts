@@ -41,9 +41,13 @@ const proxy = {
   height: genProxy(container.height, 'height'),
   width: genProxy(container.width, 'width'),
   minHeight: genProxy(container.minHeight, 'minHeight'),
+  minH: genProxy(container.minHeight, 'minHeight'),
   minWidth: genProxy(container.minWidth, 'minWidth'),
+  minW: genProxy(container.minWidth, 'minWidth'),
   maxHeight: genProxy(container.maxHeight, 'maxHeight'),
-  maxWidth: genProxy(container.maxWidth, 'maxWidth')
+  maxH: genProxy(container.maxHeight, 'maxHeight'),
+  maxWidth: genProxy(container.maxWidth, 'maxWidth'),
+  maxW: genProxy(container.maxWidth, 'maxWidth')
 }
 
 export default proxy

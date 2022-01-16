@@ -19,10 +19,14 @@ const DotBox = styled.div<{color:string}>(
   s.minWidth[2],
   s.height[5],
   s.font.size.sm,
+  s.relative,
+  s.pl[2],
+  s.flex.row.s.c,
+  s.gap.x[2],
   props => (s.before(
     { backgroundColor: props.color },
-    s.h[1],
-    s.w[1],
+    s.h[3],
+    s.w[3],
     s.rounded.circle
   ))
 )

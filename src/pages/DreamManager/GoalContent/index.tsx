@@ -24,11 +24,11 @@ const Goal = () => {
 
   // useRequest
   const [form] = Form.useForm()
-  const { data, refresh } = useRequest(() => api.dream.findGoalByDream(dreamId), {
+  const { data, refresh } = useRequest(() => api.dreamManager.findGoalByDream(dreamId), {
     refreshDeps: [dreamId]
   })
 
-  const { run } = useRequest(api.dream.addGoal, {
+  const { run } = useRequest(api.dreamManager.addGoal, {
     manual: true,
     onSuccess: () => {
       refresh()

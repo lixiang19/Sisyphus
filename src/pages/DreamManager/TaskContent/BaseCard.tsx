@@ -4,7 +4,7 @@ import { useRequest } from 'ahooks'
 import { useState, useEffect, useMemo, useRef } from 'react'
 import useUrlState from '@ahooksjs/use-url-state'
 import StatusTag from 'src/components/StatusTag'
-import { genPriority, genStatus } from 'src/helpers/bmob'
+import { genPriorityTag, genStatusTag } from 'src/helpers/bmob'
 import { useQuery } from 'src/helpers/hooks'
 import dayjs from 'dayjs'
 import { IconArrowRight } from '@arco-design/web-react/icon'
@@ -54,7 +54,7 @@ const BaseCardBox = styled.div<{isActive: boolean}>(
   s.flex.col.s.s,
   s.padding.x[3],
   s.transform.all,
-  props => (props.isActive ? { borderRight: `0.01rem solid ${s.theme.color.primary}` } : ''),
+  props => (props.isActive ? { borderRight: `2px solid ${s.theme.color.primary}` } : ''),
   s.hover(
     s.card.lg,
     {
@@ -72,8 +72,8 @@ type BaseCardProps = {
   onClick:()=>void
 }&Task
 const BaseCard = ({ name, imgUrl, note, status, priority, timeConsuming, objectId, goalFk, timePeriodEnd, timePeriodStart, onClick, ...others }:BaseCardProps) => {
-  const statusDetail = genStatus(status)
-  const priorityDetail = genPriority(priority)
+  const statusDetail = genStatusTag(status)
+  const priorityDetail = genPriorityTag(priority)
   const [urlObj] = useUrlState({ taskId: '' })
   const taskId = urlObj.taskId
   const isActive = useMemo(() => taskId === objectId, [taskId])

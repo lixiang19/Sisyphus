@@ -4,6 +4,8 @@ import Tomato from 'src/pages/Tomato'
 import Demo from 'src/pages/Demo'
 import OneDay from 'src/pages/OneDay'
 import DreamManager from 'src/pages/DreamManager'
+import Dream from 'src/pages/Dream'
+import Goal from 'src/pages/Goal'
 const routeList: RouteConfig[] = [
   {
     path: '/',
@@ -25,6 +27,14 @@ const routeList: RouteConfig[] = [
   {
     path: '/dreamManager',
     component: DreamManager
+  },
+  {
+    path: '/dream',
+    component: Dream
+  },
+  {
+    path: '/goal',
+    component: Goal
   }
 ]
 export default routeList

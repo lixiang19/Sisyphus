@@ -39,10 +39,10 @@ const Task = () => {
 
   // useRequest
   const [form] = Form.useForm()
-  const { data, refresh } = useRequest(() => api.dream.findTaskByGoal(goalId), {
+  const { data, refresh } = useRequest(() => api.dreamManager.findTaskByGoal(goalId), {
     refreshDeps: [goalId]
   })
-  const { run } = useRequest(api.dream.addTask, {
+  const { run } = useRequest(api.dreamManager.addTask, {
     manual: true,
     onSuccess: () => {
       refresh()

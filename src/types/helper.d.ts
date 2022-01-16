@@ -11,6 +11,7 @@ interface IAnyPropObject {
   [index: number]: any;
   [property: string]: any
 }
+
 type BaseSize = {
   xs: string;
   sm: string,

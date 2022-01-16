@@ -10,8 +10,8 @@ import duration from 'dayjs/plugin/duration'
 dayjs.extend(duration)
 
 const TomatoBox = styled.div(
-  s.height['2rem'],
-  s.width['2rem'],
+  s.height[10],
+  s.width[10],
   // s.relative,
   s.flex.col.c.c
 )

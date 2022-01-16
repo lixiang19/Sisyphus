@@ -11,7 +11,7 @@ type TypeCard = {
 const card:TypeCard = {
   backgroundColor: theme.color.white,
   ...effect.shadow.md,
-  ...border.rounded.xs
+  ...border.rounded.sm
 }
 const cardProxy = new Proxy(card, {
   get: function (target:any, propKey:any) {
@@ -19,7 +19,7 @@ const cardProxy = new Proxy(card, {
       return {
         backgroundColor: theme.color.white,
         ...effect.shadow.lg,
-        ...border.rounded.xs
+        ...border.rounded.sm
       }
     }
     return target[propKey]

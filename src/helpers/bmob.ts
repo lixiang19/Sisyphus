@@ -38,17 +38,21 @@ export function genRandColor () {
   return color[colorKey][deepKey]
 }
 
-export function genStatus (status:string) {
+export function genStatusTag (status:string) {
   const item = ConstVar.statusOptions.find(item => item.value === status)
   return item ?? { label: '未知', value: 'unknown', color: '#0f172a' }
 }
-export function genPriority (priority:number) {
+export function genPriorityTag (priority:number) {
   const item = ConstVar.priorityOptions.find(item => item.value === priority)
   return item ?? { label: '未知', value: 'unknown', color: '#0f172a' }
+}
+export function genConsumingTag (timeConsuming:number) {
+  return { label: `${timeConsuming}分钟`, value: timeConsuming, color: color.gray[400] }
 }
 export default {
   genDate,
   gen,
-  genStatus,
-  genPriority
+  genStatusTag,
+  genPriorityTag,
+  genConsumingTag
 }

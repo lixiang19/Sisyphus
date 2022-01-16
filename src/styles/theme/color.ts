@@ -3,6 +3,18 @@ const color:ThemeColor = {
   get primary () {
     return this.violet[500]
   },
+  get danger () {
+    return this.red[500]
+  },
+  get warning () {
+    return this.amber[500]
+  },
+  get info () {
+    return this.slate[400]
+  },
+  get success () {
+    return this.green[500]
+  },
   transparent: 'transparent',
   black: '#000',
   white: '#fff',
@@ -174,6 +186,7 @@ const color:ThemeColor = {
     800: '#155e75',
     900: '#164e63'
   },
+
   sky: {
     50: '#f0f9ff',
     100: '#e0f2fe',

@@ -1,10 +1,12 @@
 import styled from '@emotion/styled'
-import s from 'src/styles/styleHelper'
+import s, { x } from 'src/styles/styleHelper'
 import { useRequest } from 'ahooks'
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { Rate } from '@arco-design/web-react'
 import api from 'src/api'
-
+const LabelBox = styled.div(x`
+  w20
+`)
 const HabitItemBox = styled.div(
   s.flex.row.s.c,
   s.gap.x[3],
@@ -26,7 +28,7 @@ interface IHabitItem {
 
 const HabitItem = ({ children, dateHabitRelationJoin }: IHabitItem) => {
   const [rate, setRate] = useState(dateHabitRelationJoin.level)
-  const desc = ['开始吧！', ...dateHabitRelationJoin.habitFk.habits]
+  const desc = [dateHabitRelationJoin.habitFk.habits[0], ...dateHabitRelationJoin.habitFk.habits]
   const { loading, run: setLevel } = useRequest(api.habit.updateDateHabitRelation, {
     manual: true
   })
@@ -36,7 +38,7 @@ const HabitItem = ({ children, dateHabitRelationJoin }: IHabitItem) => {
   }
   return (
     <HabitItemBox>
-      <span css={s.label}>{dateHabitRelationJoin.habitFk.name}:</span>
+      <LabelBox css={s.label}>{dateHabitRelationJoin.habitFk.name}:</LabelBox>
       <Rate value={rate} onChange={handleRateChange} count={3} tooltips={['😊完成了习惯打卡😊' + desc[1], '😘厉害！更进一步😘' + desc[2], '😍非常棒！超越自我😍' + desc[3]]}></Rate>
       <span css={s.text}>{desc[rate]}</span>
     </HabitItemBox>
@@ -44,8 +46,8 @@ const HabitItem = ({ children, dateHabitRelationJoin }: IHabitItem) => {
 }
 
 const HabitBox = styled.div(
-  s.flex.col.s.s,
-  s.width[80]
+  s.flex.col.s.s
+  // s.width[80]
 )
 const Habit = () => {
   const { data: habits, error, loading } = useRequest(api.habit.findTodayHabitRelationJoin)
