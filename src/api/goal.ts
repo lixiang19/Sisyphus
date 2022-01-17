@@ -18,7 +18,7 @@ const filterGoal = async (obj:IAnyPropObject) => {
   query.include('dreamFk')
   const goals = await (query.find() as unknown as Goal[])
   const list = await orderApi.sortItAndSetOrder('goal', goals)
-  return list
+  return [...list, ...list, ...list, ...list, ...list]
 }
 const filterAndGroupGoal = async (groupBy:string, group:Options[], obj:IAnyPropObject) => {
   const query = Bmob.Query('goal')

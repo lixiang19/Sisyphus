@@ -30,7 +30,6 @@ const Bottom = styled.div(x`
   pb2
 `)
 const ContentBox = styled.div<{size: 'normal'|'large'|'small'}>(x`
-
   py2
   overflow.hidden
   border.rounded.xs

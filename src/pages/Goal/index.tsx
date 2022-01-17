@@ -25,11 +25,14 @@ const Goal = ({ children }: GoalProps) => {
   return (
     <GoalBox>
       <PageHeader title='目标'>
-        <TabPane key='2' title='Gallery' >
+        <TabPane key='1' title='画廊'>
           <GalleryView filterApi={api.goal.filterGoal}></GalleryView>
         </TabPane>
-        <TabPane key='1' title='Board'>
+        <TabPane key='2' title='看板'>
           <BoardView groupBy='status' group={ConstVar.statusOptions} updateApi={api.goal.updateGoal} filterApi={api.goal.filterAndGroupGoal}></BoardView>
+        </TabPane>
+        <TabPane key='3' title='日历'>
+          s
         </TabPane>
       </PageHeader>
     </GoalBox>

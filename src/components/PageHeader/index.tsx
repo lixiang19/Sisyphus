@@ -3,6 +3,7 @@ import s, { x } from 'src/styles/styleHelper'
 import { useRequest } from 'ahooks'
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { Tabs, Button } from '@arco-design/web-react'
+import useUrlState from '@ahooksjs/use-url-state'
 
 const Title = styled.div(x`
   fc.black
@@ -36,9 +37,15 @@ interface IAction {
   children?: React.ReactNode;
 }
 const Action = ({ children }: IAction) => {
+  const [urlObj, setUrlObj] = useUrlState()
+  function clearUrlState () {
+    setUrlObj((res) => {
+      console.log('🚀 ~ file: index.tsx ~ line 43 ~ setUrlObj ~ res', res)
+    })
+  }
   return (
     <ActionBox>
-      <Button size='small' type='secondary'>
+      <Button size='small' type='secondary' onClick={clearUrlState}>
             全部
       </Button>
       <Button size='small' type='secondary'>
@@ -55,21 +62,8 @@ const PageHeader = ({ children, title }: PageHeaderProps) => {
   return (
     <PageHeaderBox>
       <Title>{title}</Title>
-      {/* <ActionArea> */}
       <TabSelect activeTab={activeTab} onChange={setActiveTab} extra={<Action></Action>}>
         {children}
-        {/* <TabPane key='1' title='卡片'>
-
-        </TabPane>
-        <TabPane key='2' title='列表'>
-
-        </TabPane>
-        <TabPane key='3' title='日历'>
-
-        </TabPane>
-        <TabPane key='4' title='时间轴'>
-
-        </TabPane> */}
       </TabSelect>
     </PageHeaderBox>
   )
