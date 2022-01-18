@@ -54,6 +54,9 @@ const Action = ({ children }: IAction) => {
       <Button size='small' type='secondary'>
             过滤
       </Button>
+      <Button size='small' type='primary'>
+            新增
+      </Button>
     </ActionBox>
   )
 }

@@ -28,6 +28,7 @@ type ColorUseItem = {
   [key in keyof ColorItem]: IAnyPropObject
 }
 interface Color {
+  themeColor: Readonly<ColorItem>,
   slate:Readonly<ColorItem>,
   gray:Readonly<ColorItem>,
   zinc:Readonly<ColorItem>,

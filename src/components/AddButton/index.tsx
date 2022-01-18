@@ -12,11 +12,11 @@ const AddButtonBox = styled.div(
   // s.height[8],
   s.flex.row.c.c,
   s.border.rounded.md,
-  s.bg.sky[100],
+  // s.bg.sky[100],
   s.gap.x[3],
-  s.font.size['50%'],
-  s.font.color.sky[500],
-  s.font.weight.bold,
+  s.font.size['20%'],
+  // s.font.color.sky[500],
+  s.font.weight.thin,
   s.border.secondary
 )
 interface AddButtonProps {
@@ -27,7 +27,7 @@ const AddButton = ({ onClick, className }:AddButtonProps) => {
   return (
     <AddButtonBox onClick={onClick} className={className}>
       <IconPlusCircle />
-      新建
+      新增
     </AddButtonBox>
   )
 }

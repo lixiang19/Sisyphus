@@ -30,9 +30,6 @@ function GalleryView<T extends BaseCard> ({ filterApi }: GalleryViewProps<T>) {
   })
   return (
     <GalleryViewBox>
-      <div css={x`w83 h.f`}>
-        <AddButton onClick={() => {}}></AddButton>
-      </div>
       {data && data.map((item, index) => (<BaseCard
         key={index}
         name={item.name}
@@ -42,6 +39,9 @@ function GalleryView<T extends BaseCard> ({ filterApi }: GalleryViewProps<T>) {
         data={item}
       >
       </BaseCard>))}
+      <div css={x`w83 h.f`}>
+        <AddButton onClick={() => {}}></AddButton>
+      </div>
     </GalleryViewBox>
   )
 }

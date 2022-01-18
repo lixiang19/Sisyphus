@@ -11,7 +11,7 @@ function setRem () {
   }
   docEl.style.fontSize = 100 * (clientWidth / 2560) + 'px'
 }
-// setRem()
+setRem()
 // window.onresize = () => {
 //   setRem()
 // }
