@@ -15,21 +15,29 @@ const Option = Select.Option
 const FormItem = Form.Item
 interface FormProps {
   onCancel: () => void;
-  onConfirm: (values:any) => void;
+  onConfirm: () => void;
   visible: boolean;
-  statusInitialValue?: Status
+  initialData?: any;
 }
-const FormDialog = ({ onCancel, visible, onConfirm, statusInitialValue = 'ready' }: FormProps) => {
+const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) => {
+  const { data: dreamOptions } = useRequest(() => api.dream.filterDream({ status: 'inProgress' }))
+  const { run } = useRequest(api.goal.addGoal, {
+    manual: true
+  })
+  const [urlObj] = useUrlState()
   const [form] = Form.useForm()
   function handleConfirm () {
     form.validate().then((values) => {
-      onConfirm(values)
+      run(values).then((result) => {
+        onConfirm()
+      })
     }).catch((error) => {
       console.log(error.name)
     })
   }
   useEffect(() => {
     form.resetFields()
+    form.setFieldsValue(initialData)
   }, [visible])
   function handleCancel () {
     onCancel()
@@ -37,11 +45,12 @@ const FormDialog = ({ onCancel, visible, onConfirm, statusInitialValue = 'ready'
   return (
     <>
       <Dialog visible={visible} onOk={handleConfirm} onCancel={handleCancel}>
-        <Form form={form}>
+        {initialData?.status}
+        <Form form={form} initialValues={initialData}>
           <FormItem label='任务名称' field='name' rules={[{ required: true }]} >
             <Input />
           </FormItem>
-          <FormItem label='状态' field='status' initialValue={statusInitialValue}>
+          <FormItem label='状态' field='status'>
             <Select>
               {ConstVar.statusOptions.map((option, index) => (
                 <Option key={option.value} value={option.value}>
@@ -50,7 +59,16 @@ const FormDialog = ({ onCancel, visible, onConfirm, statusInitialValue = 'ready'
               ))}
             </Select>
           </FormItem>
-          <FormItem label='优先级' field='priority' initialValue={1}>
+          <FormItem label='梦想' field='dreamId' initialValue={urlObj.dreamFk}>
+            <Select>
+              {dreamOptions && dreamOptions.map((option, index) => (
+                <Option key={option.objectId} value={option.objectId}>
+                  {option.name}
+                </Option>
+              ))}
+            </Select>
+          </FormItem>
+          <FormItem label='优先级' field='priority'>
             <Select>
               {ConstVar.priorityOptions.map((option, index) => (
                 <Option key={option.value} value={option.value}>
@@ -58,6 +76,12 @@ const FormDialog = ({ onCancel, visible, onConfirm, statusInitialValue = 'ready'
                 </Option>
               ))}
             </Select>
+          </FormItem>
+          <FormItem
+            label='截至日期'
+            field='deadlineParam'
+          >
+            <DatePicker />
           </FormItem>
           <FormItem label='备注' field='note'>
             <Input />

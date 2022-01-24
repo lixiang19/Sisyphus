@@ -11,6 +11,11 @@ const NumBox = styled.div(
     background: 'rgba(0, 0, 0, 0.05)'
   }
 )
+const FlexBox = styled.div(
+  s.flex.row.e.c,
+  s.gap.x[4]
+)
+
 const Title = styled.div<{color:string}>(
   s.px[2],
   s.py[2],
@@ -33,7 +38,10 @@ const Header = ({ children, title, count, color }: IHeader) => {
   return (
     <HeaderBox >
       <Title color={color}>{title}</Title>
-      <NumBox>{count}</NumBox>
+      <FlexBox>
+        {children}
+        <NumBox>{count}</NumBox>
+      </FlexBox>
     </HeaderBox>
   )
 }
@@ -49,14 +57,17 @@ const TagBoardWrapperBox = styled.div(
 )
 interface IStatusWrapper {
   children?: React.ReactNode;
+  headerChildren?: React.ReactNode;
   title: string;
   color?: string;
   count?: number
 }
-const TagBoardWrapper = ({ children, title = '未知', count = 0, color = 'gray' }: IStatusWrapper) => {
+const TagBoardWrapper = ({ children, title = '未知', count = 0, color = 'gray', headerChildren }: IStatusWrapper) => {
   return (
     <TagBoardWrapperBox>
-      <Header title={title} count={count} color={color}></Header>
+      <Header title={title} count={count} color={color}>
+        {headerChildren}
+      </Header>
       {children}
     </TagBoardWrapperBox>
   )

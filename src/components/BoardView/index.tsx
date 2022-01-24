@@ -1,11 +1,15 @@
 import styled from '@emotion/styled'
 import s, { x } from 'src/styles/styleHelper'
-import { useRequest } from 'ahooks'
+import { useBoolean, useRequest, useSetState } from 'ahooks'
 import { useState, useEffect, useMemo, useRef } from 'react'
 import List from './List'
 import TagBoardWrapper from './TagBoardWrapper'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import useUrlState from '@ahooksjs/use-url-state'
+import AddButton from 'src/components/AddButton'
+import { IconPlus } from '@arco-design/web-react/icon'
+import { Button } from '@arco-design/web-react'
+
 function genGroupValue (droppableId:string) {
   const droppableIdStrs = droppableId?.split('_')
   const propValue = droppableIdStrs[2]
@@ -43,12 +47,17 @@ const BoardViewBox = styled.div(x`
 interface GalleryViewProps<T> {
   group:Options[],
   groupBy:string,
+
   filterApi: (groupBy:string, ...args: any[]) => Promise<Record<string, T[]>>
   updateApi: (id:string, ...args: any[]) => Promise<any>
+  dialogChild?: (...args: any[])=>React.ReactNode
 }
 
-function BoardView<T extends BaseTask> ({ group, filterApi, updateApi, groupBy }: GalleryViewProps<T>) {
+function BoardView<T extends BaseTask> ({ group, filterApi, updateApi, groupBy, dialogChild }: GalleryViewProps<T>) {
+  const [initialData, setInitialData] = useSetState<IAnyPropObject>({})
+
   const [urlObj, setUrlObj] = useUrlState()
+  const [visible, { setFalse, setTrue }] = useBoolean(false)
   const { data, loading, refresh } = useRequest(() => filterApi(groupBy, group, urlObj), {
     refreshDeps: [groupBy, group, urlObj]
   })
@@ -68,16 +77,25 @@ function BoardView<T extends BaseTask> ({ group, filterApi, updateApi, groupBy }
       refresh()
     })
   }
+  function handleAdd (initialValue:string|number) {
+    setTrue()
+    setInitialData({ [groupBy]: initialValue })
+  }
   return (
     <BoardViewBox>
       <DragDropContext onDragEnd={onDragEnd}>
         {group.map((item, index) => (
-          <TagBoardWrapper title={item.label} color={item.color} key={item.value} count={data && data[item.value].length}>
+          <TagBoardWrapper
+            title={item.label}
+            color={item.color}
+            key={item.value}
+            count={data && data[item.value].length}
+            headerChildren={ <Button type='text' icon={<IconPlus />} onClick={() => handleAdd(item.value)}></Button>}>
             <List list={data && data[item.value]} keyId={'group_' + groupBy + '_' + item.value}></List>
           </TagBoardWrapper>
         ))}
       </DragDropContext>
-
+      {dialogChild && dialogChild(initialData, { visible, setFalse, setTrue }, { refresh })}
     </BoardViewBox>
   )
 }

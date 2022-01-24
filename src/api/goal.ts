@@ -18,7 +18,7 @@ const filterGoal = async (obj:IAnyPropObject) => {
   query.include('dreamFk')
   const goals = await (query.find() as unknown as Goal[])
   const list = await orderApi.sortItAndSetOrder('goal', goals)
-  return [...list, ...list, ...list, ...list, ...list]
+  return list
 }
 const filterAndGroupGoal = async (groupBy:string, group:Options[], obj:IAnyPropObject) => {
   const query = Bmob.Query('goal')
@@ -46,8 +46,23 @@ const updateGoal = async (id:string, obj:IAnyPropObject, targetOrder:number, sou
   orderApi.updateOrderByTableName('goal', targetOrder, sourceOrder)
   return gen<BaseBmobItem>(query.save())
 }
+const addGoal = async (goal:Goal&{dreamId:string}) => {
+  const query = Bmob.Query('goal')
+  const pointer = Bmob.Pointer('dream')
+  query.set('dreamFk', pointer.set(goal.dreamId) as any)
+  query.set('name', goal.name)
+  query.set('deadline', genDate(goal.deadlineParam) as any)
+  query.set('priority', goal.priority as any)
+  query.set('color', genRandColor())
+  query.set('status', goal.status as any)
+  query.set('note', goal.note ?? '')
+  query.set('imgUrl', goal.imgUrl ?? '')
+  query.set('timeConsuming', 0 as any)
+  return gen<BaseBmobItem>(query.save())
+}
 export default {
   filterGoal,
   filterAndGroupGoal,
-  updateGoal
+  updateGoal,
+  addGoal
 }
