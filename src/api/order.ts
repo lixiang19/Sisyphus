@@ -2,11 +2,14 @@ import Bmob from 'hydrogen-js-sdk'
 import dayjs from 'dayjs'
 import { genDate, gen, genRandColor, genStatusTag, genConsumingTag } from 'src/helpers/bmob'
 import dateApi from './date'
+
 async function findOrderByTableName (tableName:string) {
   const query = Bmob.Query('order')
   query.equalTo('tableName', '==', tableName)
   const orders = await (query.find() as unknown as Order[])
+
   const order = orders[0]
+
   const orderList = order.orderList
   const orderMap:IAnyPropObject = orderList.reduce((map, item, index) => {
     (map as any)[item] = index
@@ -17,6 +20,22 @@ async function findOrderByTableName (tableName:string) {
     orderList,
     orderMap
   }
+}
+async function addOrderByTableName (tableName:string, objectId:string) {
+  const query = Bmob.Query('order')
+  const { order, orderList } = await findOrderByTableName(tableName)
+  query.set('id', order.objectId)
+  orderList.push(objectId)
+  query.set('orderList', orderList as unknown as string)
+  return gen<BaseBmobItem>(query.save())
+}
+async function deleteOrderByTableName (tableName:string, objectId:string) {
+  const query = Bmob.Query('order')
+  const { order, orderList } = await findOrderByTableName(tableName)
+  query.set('id', order.objectId)
+  orderList.splice(orderList.indexOf(objectId), 1)
+  query.set('orderList', orderList as unknown as string)
+  return gen<BaseBmobItem>(query.save())
 }
 async function updateOrderByTableName (tableName: string, targetOrder: number, sourceOrder:number) {
   const query = Bmob.Query('order')
@@ -46,5 +65,7 @@ async function sortItAndSetOrder<T extends BaseTask> (tableName:string, list:T[]
 export default {
   findOrderByTableName,
   updateOrderByTableName,
-  sortItAndSetOrder
+  sortItAndSetOrder,
+  addOrderByTableName,
+  deleteOrderByTableName
 }

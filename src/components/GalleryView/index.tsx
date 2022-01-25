@@ -13,11 +13,12 @@ const GalleryViewBox = styled.div(x`
   gap.y5
   bg.gray100
   p4,
+  border.rounded.xs
   overflow.y
 `, {
   display: 'grid',
   gridTemplateColumns: `repeat(auto-fill, minmax(${s.size[83]}, 1fr))`,
-  gridTemplateRows: `repeat(auto-fill, minmax(${s.size[80]}, 1fr))`,
+  gridTemplateRows: `repeat(auto-fill, ${s.size[88]})`,
   justifyItems: 'center'
 })
 interface GalleryViewProps<T> {

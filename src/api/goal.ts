@@ -58,7 +58,10 @@ const addGoal = async (goal:Goal&{dreamId:string}) => {
   query.set('note', goal.note ?? '')
   query.set('imgUrl', goal.imgUrl ?? '')
   query.set('timeConsuming', 0 as any)
-  return gen<BaseBmobItem>(query.save())
+  const { objectId } = await gen<BaseBmobItem>(query.save())
+  const res = await orderApi.addOrderByTableName('goal', objectId)
+  console.log('🚀 ~ file: goal.ts ~ line 62 ~ addGoal ~ res', res)
+  return res
 }
 export default {
   filterGoal,

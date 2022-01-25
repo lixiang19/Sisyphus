@@ -4,14 +4,14 @@ import { useRequest } from 'ahooks'
 import { useState, useEffect, useMemo, useRef, useContext } from 'react'
 import StatusTag from 'src/components/StatusTag'
 import { Dropdown, Menu, Button, Space } from '@arco-design/web-react'
-import { IconDelete, IconEdit, IconMore } from '@arco-design/web-react/icon'
+import { IconArrowRight, IconDelete, IconEdit, IconMore } from '@arco-design/web-react/icon'
 import { ActionContext } from 'src/store/context'
-
+import CompleteIcon from 'src/components/CompleteIcon'
 const Header = styled.div(x`
   w.full
   fc.neutral800
   fs.lg
-  flex.row.sb.s
+  flex.row.sb.c
   gap.x3
   pt3
   pb2
@@ -43,7 +43,7 @@ props => (props.size === 'small' ? x`minHeight15` : x`h60`),
 const BaseCardBox = styled.div(x`
   cp
   card
-  w83
+  w90
   px3
   transform.all
 `,
@@ -55,6 +55,14 @@ s.hover(
     }
   }
 ))
+const FlexBox = styled.div(x`
+  flex.row.e.c
+  gap.x1
+`)
+const FlexBoxStart = styled.div(x`
+  flex.row.s.c
+  gap.x1
+`)
 
 interface IContent {
   children?: React.ReactNode;
@@ -72,12 +80,16 @@ const Content = ({ children, imgUrl, note }: IContent) => {
     return (<p>暂无内容</p>)
   }
 }
-const dropList = (
-  <Menu>
-    <Menu.Item key='1' css={{ color: s.theme.color.danger }}><IconEdit css={x`mr2`}/>编辑</Menu.Item>
-    <Menu.Item key='2'><IconDelete css={x`mr2`}/>删除</Menu.Item>
-  </Menu>
-)
+const DropList = ({ data }:{data?:any}) => {
+  const action = useContext(ActionContext)
+
+  return (
+    <Menu>
+      <Menu.Item key='1' css={{ color: s.theme.color.danger }}><IconEdit css={x`mr2`}/>编辑</Menu.Item>
+      <Menu.Item key='2'><IconDelete css={x`mr2`} onClick={() => action.deleteClick && action.deleteClick(data)}/>删除</Menu.Item>
+    </Menu>
+  )
+}
 interface BaseCardProps<T> {
   name: string,
   children?: React.ReactNode;
@@ -93,12 +105,20 @@ function BaseCard<T> ({ name, tagList, children, imgUrl, note, innerRef, provide
   const action = useContext(ActionContext)
 
   return (
-    <BaseCardBox onClick={() => action.cardClick && action.cardClick(data)} ref={innerRef} {...provided?.draggableProps} {...provided?.dragHandleProps}>
+    <BaseCardBox ref={innerRef} {...provided?.draggableProps} {...provided?.dragHandleProps}>
       <Header>
-        <span>{name}</span>
-        <Dropdown droplist={dropList} trigger='click'>
-          <IconMore />
-        </Dropdown>
+        <FlexBoxStart>
+          <CompleteIcon></CompleteIcon>
+          <span>{name}</span>
+        </FlexBoxStart>
+
+        <FlexBox>
+          <Button type='text' icon={<IconArrowRight />} onClick={() => action.cardClick && action.cardClick(data)}></Button>
+          <Dropdown droplist={(<DropList data={data}></DropList>)} trigger='click'>
+            <Button type='text' icon={<IconMore />}></Button>
+          </Dropdown>
+        </FlexBox>
+
       </Header>
       <ContentBox size={size}>
         <Content imgUrl={imgUrl} note={note}>{children}</Content>

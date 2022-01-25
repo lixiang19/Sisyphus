@@ -13,58 +13,49 @@ import { ActionContext } from 'src/store/context'
 import useUrlState from '@ahooksjs/use-url-state'
 import { useHistory } from 'react-router-dom'
 import FormDialog from './FormDialog'
+
 const TabPane = Tabs.TabPane
-const GoalBox = styled.div(x`
+const TaskBox = styled.div(x`
   w.full
   h.full
   bg.white
   px8                                   
   py8
 `)
-interface GoalProps {
+interface TaskProps {
   children?: React.ReactNode;
 }
-const Goal = ({ children }: GoalProps) => {
+const Task = ({ children }: TaskProps) => {
   const [urlObj, setUrlObj] = useUrlState()
-  // const [visible2, {setFalse, setTrue }] = useBoolean(false)
   const history = useHistory()
   function setUrlDreamId (data:Task) {
-    history.push('/task')
+    history.push('/todo')
     setUrlObj({ taskFk: data.objectId })
   }
   async function deleteItem (data:Task) {
-    console.log('🚀 ~ file: index.tsx ~ line 36 ~ deleteItem ~ data', data)
     const id = data.objectId
-    // await api.task.deleteTask(id)
+    await api.task.deleteTask(id)
   }
   return (
-    <GoalBox>
+    <TaskBox>
       <ActionContext.Provider value={{ cardClick: setUrlDreamId, deleteClick: deleteItem }}>
         <PageHeader title='目标'>
-          <TabPane key='1' title='画廊'>
-            <GalleryView
-              filterApi={api.goal.filterGoal}
-              dialogChild={(data, { visible, setFalse }, { refresh }) => (
-                <FormDialog visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
-            ></GalleryView>
-          </TabPane>
-          <TabPane key='2' title='看板'>
+          <TabPane key='1' title='看板'>
             <BoardView
               groupBy='status'
               group={ConstVar.statusOptions}
-              updateApi={api.goal.updateGoal}
-              filterApi={api.goal.filterAndGroupGoal}
+              updateApi={api.task.updateTask}
+              filterApi={api.task.filterAndGroupTask}
               dialogChild={(data, { visible, setFalse }, { refresh }) => (
                 <FormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
             ></BoardView>
           </TabPane>
-          <TabPane key='3' title='日历'>
+          <TabPane key='2' title='时间轴'>
           s
           </TabPane>
         </PageHeader>
       </ActionContext.Provider>
-
-    </GoalBox>
+    </TaskBox>
   )
 }
-export default Goal
+export default Task

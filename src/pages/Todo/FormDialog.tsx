@@ -20,8 +20,8 @@ interface FormProps {
   initialData?: any;
 }
 const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) => {
-  const { data: dreamOptions } = useRequest(() => api.dream.filterDream({ status: 'inProgress' }))
-  const { run } = useRequest(api.goal.addGoal, {
+  const { data: taskOptions } = useRequest(() => api.task.filterTask({ status: 'inProgress' }))
+  const { run } = useRequest(api.todo.addTodo, {
     manual: true
   })
   const [urlObj] = useUrlState()
@@ -58,9 +58,9 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
               ))}
             </Select>
           </FormItem>
-          <FormItem label='梦想' field='dreamId' initialValue={urlObj.dreamFk}>
+          <FormItem label='任务' field='taskId' initialValue={urlObj.taskFk}>
             <Select>
-              {dreamOptions && dreamOptions.map((option, index) => (
+              {taskOptions && taskOptions.map((option, index) => (
                 <Option key={option.objectId} value={option.objectId}>
                   {option.name}
                 </Option>
@@ -75,12 +75,6 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
                 </Option>
               ))}
             </Select>
-          </FormItem>
-          <FormItem
-            label='截至日期'
-            field='deadlineParam'
-          >
-            <DatePicker />
           </FormItem>
           <FormItem label='备注' field='note'>
             <Input />

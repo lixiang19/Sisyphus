@@ -30,10 +30,10 @@ const Home = ({ children }:IHomeProps) => {
         <MenuItem path='/dreamManager' icon={<IconApps/>}>
             任务管理
         </MenuItem>
-        <MenuItem path='/a' icon={<IconApps/>}>
+        <MenuItem path='/todo' icon={<IconApps/>}>
             燃烧日程
         </MenuItem>
-        <MenuItem path='/b' icon={<IconApps/>}>
+        <MenuItem path='/task' icon={<IconApps/>}>
             任务
         </MenuItem>
         <MenuItem path='/goal' icon={<IconApps/>}>

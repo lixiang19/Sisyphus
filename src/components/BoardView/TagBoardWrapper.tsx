@@ -24,7 +24,7 @@ const Title = styled.div<{color:string}>(
 )
 const HeaderBox = styled.div(
   s.h[15],
-  s.w[83],
+  s.w[90],
   s.flex.row.sb.c,
   s.font.size.md
 )
@@ -47,12 +47,12 @@ const Header = ({ children, title, count, color }: IHeader) => {
 }
 
 const TagBoardWrapperBox = styled.div(
-  s.w[93],
+  s.w[100],
   s.h.full,
   s.flex.col.s.c,
   s.bg.gray[200],
   s.py[1],
-  // s.px[3],
+  s.px[5],
   s.rounded.sm
 )
 interface IStatusWrapper {

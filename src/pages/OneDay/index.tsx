@@ -5,7 +5,7 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import Card from './components/Card'
 import Habit from './components/Habit'
 import Diet from './components/Diet'
-import TodoContent from '../DreamManager/TodoContent'
+import TodoContent from './components/TodoContent'
 const OneDayBox = styled.div(
   s.height.full,
   s.width.full,
@@ -34,7 +34,11 @@ const TodoWrapper = styled.div(
   s.gap.y[10],
   s.bg.white,
   s.rounded.md,
-  s.p[4]
+  {
+    overflow: 'hidden',
+    border: '0.2rem solid #fff'
+  }
+
 )
 const BottomRightWrapper = styled.div(
   s.h.full,
