@@ -64,9 +64,9 @@ const addTask = async (task:Task&{goalId:string}) => {
   const res = await orderApi.addOrderByTableName('task', objectId)
   return res
 }
-const deleteTask = async (id:string) => {
+const deleteItem = async (id:string) => {
   const query = Bmob.Query('task')
-  query.destroy('objectId')
+  query.destroy(id)
   const res = await orderApi.deleteOrderByTableName('task', id)
   return res
 }
@@ -75,5 +75,5 @@ export default {
   updateTask,
   addTask,
   filterTask,
-  deleteTask
+  deleteItem
 }

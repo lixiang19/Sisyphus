@@ -20,7 +20,13 @@ const filterDream = async (obj:IAnyPropObject) => {
   })
   return dreams
 }
+const deleteItem = async (id:string) => {
+  const query = Bmob.Query('task')
+  await gen(query.destroy('objectId'))
+  const res = await orderApi.deleteOrderByTableName('task', id)
+  return res
+}
 export default {
-  filterDream
-
+  filterDream,
+  deleteItem
 }

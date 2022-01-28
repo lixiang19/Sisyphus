@@ -9,7 +9,7 @@ import useUrlState from '@ahooksjs/use-url-state'
 import AddButton from 'src/components/AddButton'
 import { IconPlus } from '@arco-design/web-react/icon'
 import { Button } from '@arco-design/web-react'
-
+import { ActionContext } from 'src/store/context'
 function genGroupValue (droppableId:string) {
   const droppableIdStrs = droppableId?.split('_')
   const propValue = droppableIdStrs[2]
@@ -46,24 +46,32 @@ const BoardViewBox = styled.div(x`
 `)
 interface GalleryViewProps<T> {
   group:Options[],
-  groupBy:string,
-
+  groupBy:GroupBy,
+  routeAction?: (...args: any[]) => void,
+  deleteApi?: (id: string) => Promise<BaseBmobItem>
   filterApi: (groupBy:string, ...args: any[]) => Promise<Record<string, T[]>>
   updateApi: (id:string, ...args: any[]) => Promise<any>
   dialogChild?: (...args: any[])=>React.ReactNode
 }
 
-function BoardView<T extends BaseTask> ({ group, filterApi, updateApi, groupBy, dialogChild }: GalleryViewProps<T>) {
+function BoardView<T extends BaseTask> ({ group, filterApi, updateApi, groupBy, dialogChild, routeAction, deleteApi }: GalleryViewProps<T>) {
   const [initialData, setInitialData] = useSetState<IAnyPropObject>({})
 
   const [urlObj, setUrlObj] = useUrlState()
   const [visible, { setFalse, setTrue }] = useBoolean(false)
-  const { data, loading, refresh } = useRequest(() => filterApi(groupBy, group, urlObj), {
+  const { data, loading, refresh, mutate } = useRequest(() => filterApi(groupBy, group, urlObj), {
     refreshDeps: [groupBy, group, urlObj]
   })
-  const { data: res, run } = useRequest(updateApi, {
-    manual: true
-  })
+  async function deleteItem (item:T) {
+    console.log('🚀 ~ file: index.tsx ~ line 66 ~ deleteItem ~ item', item)
+    mutate(data => {
+      const groupId = item[groupBy] as string
+      data[groupId] = data[groupId].filter(i => i.objectId !== item.objectId)
+      return data
+    })
+    await (deleteApi && deleteApi(item.objectId))
+    refresh()
+  }
   function onDragEnd (result: any, provided: any) {
     if (!data || !result) {
       return
@@ -73,7 +81,7 @@ function BoardView<T extends BaseTask> ({ group, filterApi, updateApi, groupBy, 
     const { sourceOrder, targetOrder } = findOrder(data, result.source, result.destination, id)
     const obj:IAnyPropObject = {}
     obj[groupBy] = destinationGroupValue
-    run(id, obj, sourceOrder, targetOrder).then(() => {
+    updateApi(id, obj, sourceOrder, targetOrder).then(() => {
       refresh()
     })
   }
@@ -82,21 +90,23 @@ function BoardView<T extends BaseTask> ({ group, filterApi, updateApi, groupBy, 
     setInitialData({ [groupBy]: initialValue })
   }
   return (
-    <BoardViewBox>
-      <DragDropContext onDragEnd={onDragEnd}>
-        {group.map((item, index) => (
-          <TagBoardWrapper
-            title={item.label}
-            color={item.color}
-            key={item.value}
-            count={data && data[item.value].length}
-            headerChildren={ <Button type='text' icon={<IconPlus />} onClick={() => handleAdd(item.value)}></Button>}>
-            <List list={data && data[item.value]} keyId={'group_' + groupBy + '_' + item.value}></List>
-          </TagBoardWrapper>
-        ))}
-      </DragDropContext>
-      {dialogChild && dialogChild(initialData, { visible, setFalse, setTrue }, { refresh })}
-    </BoardViewBox>
+    <ActionContext.Provider value={{ routeAction: routeAction, delete: deleteItem }}>
+      <BoardViewBox>
+        <DragDropContext onDragEnd={onDragEnd}>
+          {group.map((item, index) => (
+            <TagBoardWrapper
+              title={item.label}
+              color={item.color}
+              key={item.value}
+              count={data && data[item.value].length}
+              headerChildren={ <Button type='text' icon={<IconPlus />} onClick={() => handleAdd(item.value)}></Button>}>
+              <List list={data && data[item.value]} keyId={'group_' + groupBy + '_' + item.value}></List>
+            </TagBoardWrapper>
+          ))}
+        </DragDropContext>
+        {dialogChild && dialogChild(initialData, { visible, setFalse, setTrue }, { refresh })}
+      </BoardViewBox>
+    </ActionContext.Provider>
   )
 }
 export default BoardView

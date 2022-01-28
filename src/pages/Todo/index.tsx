@@ -34,7 +34,7 @@ const Todo = ({ children }: TodoProps) => {
   }
   return (
     <TodoBox>
-      <ActionContext.Provider value={{ cardClick: setUrlDreamId }}>
+      <ActionContext.Provider value={{ routeAction: setUrlDreamId }}>
         <PageHeader title='目标'>
           <TabPane key='1' title='看板'>
             <BoardView

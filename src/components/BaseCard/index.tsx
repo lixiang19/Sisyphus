@@ -80,13 +80,13 @@ const Content = ({ children, imgUrl, note }: IContent) => {
     return (<p>暂无内容</p>)
   }
 }
-const DropList = ({ data }:{data?:any}) => {
+const DropList = ({ data }:{data:any}) => {
   const action = useContext(ActionContext)
 
   return (
     <Menu>
       <Menu.Item key='1' css={{ color: s.theme.color.danger }}><IconEdit css={x`mr2`}/>编辑</Menu.Item>
-      <Menu.Item key='2'><IconDelete css={x`mr2`} onClick={() => action.deleteClick && action.deleteClick(data)}/>删除</Menu.Item>
+      <Menu.Item key='2' onClick={() => action.delete && action.delete(data)}><IconDelete css={x`mr2`}/>删除</Menu.Item>
     </Menu>
   )
 }
@@ -113,8 +113,8 @@ function BaseCard<T> ({ name, tagList, children, imgUrl, note, innerRef, provide
         </FlexBoxStart>
 
         <FlexBox>
-          <Button type='text' icon={<IconArrowRight />} onClick={() => action.cardClick && action.cardClick(data)}></Button>
-          <Dropdown droplist={(<DropList data={data}></DropList>)} trigger='click'>
+          <Button type='text' icon={<IconArrowRight />} onClick={() => action.routeAction && action.routeAction(data)}></Button>
+          <Dropdown droplist={<DropList data={data}></DropList>} trigger='click'>
             <Button type='text' icon={<IconMore />}></Button>
           </Dropdown>
         </FlexBox>

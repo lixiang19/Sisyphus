@@ -63,9 +63,17 @@ const addGoal = async (goal:Goal&{dreamId:string}) => {
   console.log('🚀 ~ file: goal.ts ~ line 62 ~ addGoal ~ res', res)
   return res
 }
+const deleteItem = async (id:string) => {
+  console.log('🚀 ~ file: goal.ts ~ line 67 ~ deleteItem ~ id', id)
+  const query = Bmob.Query('goal')
+  query.destroy(id)
+  const res = await orderApi.deleteOrderByTableName('goal', id)
+  return res
+}
 export default {
   filterGoal,
   filterAndGroupGoal,
   updateGoal,
-  addGoal
+  addGoal,
+  deleteItem
 }

@@ -9,7 +9,7 @@ import GalleryView from 'src/components/GalleryView'
 import BoardView from 'src/components/BoardView'
 import api from 'src/api'
 import ConstVar from 'src/helpers/ConstVar'
-import { ActionContext } from 'src/store/context'
+
 import useUrlState from '@ahooksjs/use-url-state'
 import { useHistory } from 'react-router-dom'
 import FormDialog from './FormDialog'
@@ -32,37 +32,33 @@ const Goal = ({ children }: GoalProps) => {
     history.push('/task')
     setUrlObj({ taskFk: data.objectId })
   }
-  async function deleteItem (data:Task) {
-    console.log('🚀 ~ file: index.tsx ~ line 36 ~ deleteItem ~ data', data)
-    const id = data.objectId
-    // await api.task.deleteTask(id)
-  }
   return (
     <GoalBox>
-      <ActionContext.Provider value={{ cardClick: setUrlDreamId, deleteClick: deleteItem }}>
-        <PageHeader title='目标'>
-          <TabPane key='1' title='画廊'>
-            <GalleryView
-              filterApi={api.goal.filterGoal}
-              dialogChild={(data, { visible, setFalse }, { refresh }) => (
-                <FormDialog visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
-            ></GalleryView>
-          </TabPane>
-          <TabPane key='2' title='看板'>
-            <BoardView
-              groupBy='status'
-              group={ConstVar.statusOptions}
-              updateApi={api.goal.updateGoal}
-              filterApi={api.goal.filterAndGroupGoal}
-              dialogChild={(data, { visible, setFalse }, { refresh }) => (
-                <FormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
-            ></BoardView>
-          </TabPane>
-          <TabPane key='3' title='日历'>
+      <PageHeader title='目标'>
+        <TabPane key='1' title='画廊'>
+          <GalleryView
+            routeAction={setUrlDreamId}
+            deleteApi={api.goal.deleteItem}
+            filterApi={api.goal.filterGoal}
+            dialogChild={(data, { visible, setFalse }, { refresh }) => (
+              <FormDialog visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
+          ></GalleryView>
+        </TabPane>
+        <TabPane key='2' title='看板'>
+          <BoardView
+            groupBy='status'
+            group={ConstVar.statusOptions}
+            deleteApi={api.goal.deleteItem}
+            updateApi={api.goal.updateGoal}
+            filterApi={api.goal.filterAndGroupGoal}
+            dialogChild={(data, { visible, setFalse }, { refresh }) => (
+              <FormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
+          ></BoardView>
+        </TabPane>
+        <TabPane key='3' title='日历'>
           s
-          </TabPane>
-        </PageHeader>
-      </ActionContext.Provider>
+        </TabPane>
+      </PageHeader>
 
     </GoalBox>
   )

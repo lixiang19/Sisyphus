@@ -32,29 +32,24 @@ const Task = ({ children }: TaskProps) => {
     history.push('/todo')
     setUrlObj({ taskFk: data.objectId })
   }
-  async function deleteItem (data:Task) {
-    const id = data.objectId
-    await api.task.deleteTask(id)
-  }
   return (
     <TaskBox>
-      <ActionContext.Provider value={{ cardClick: setUrlDreamId, deleteClick: deleteItem }}>
-        <PageHeader title='目标'>
-          <TabPane key='1' title='看板'>
-            <BoardView
-              groupBy='status'
-              group={ConstVar.statusOptions}
-              updateApi={api.task.updateTask}
-              filterApi={api.task.filterAndGroupTask}
-              dialogChild={(data, { visible, setFalse }, { refresh }) => (
-                <FormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
-            ></BoardView>
-          </TabPane>
-          <TabPane key='2' title='时间轴'>
+      <PageHeader title='目标'>
+        <TabPane key='1' title='看板'>
+          <BoardView
+            groupBy='status'
+            group={ConstVar.statusOptions}
+            deleteApi={api.task.deleteItem}
+            updateApi={api.task.updateTask}
+            filterApi={api.task.filterAndGroupTask}
+            dialogChild={(data, { visible, setFalse }, { refresh }) => (
+              <FormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
+          ></BoardView>
+        </TabPane>
+        <TabPane key='2' title='时间轴'>
           s
-          </TabPane>
-        </PageHeader>
-      </ActionContext.Provider>
+        </TabPane>
+      </PageHeader>
     </TaskBox>
   )
 }

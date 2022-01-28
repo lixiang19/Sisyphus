@@ -5,7 +5,7 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import BaseCard from 'src/components/BaseCard'
 import useUrlState from '@ahooksjs/use-url-state'
 import AddButton from 'src/components/AddButton'
-
+import { ActionContext } from 'src/store/context'
 const GalleryViewBox = styled.div(x`
   w.full
   h.full
@@ -23,30 +23,42 @@ const GalleryViewBox = styled.div(x`
 })
 interface GalleryViewProps<T> {
   filterApi: (...args: any[]) => Promise<T[]>
-  dialogChild?: (...args: any[])=>React.ReactNode
+  deleteApi?: (id: string) => Promise<BaseBmobItem>
+  dialogChild?: (...args: any[]) => React.ReactNode
+  routeAction?: (...args: any[]) => void
 }
-function GalleryView<T extends BaseCard> ({ filterApi, dialogChild }: GalleryViewProps<T>) {
+function GalleryView<T extends BaseCard> ({ filterApi, dialogChild, routeAction, deleteApi }: GalleryViewProps<T>) {
   const [urlObj] = useUrlState()
   const [visible, { setFalse, setTrue }] = useBoolean(false)
-  const { data, loading, refresh } = useRequest(() => filterApi(urlObj), {
+  const { data, loading, refresh, mutate } = useRequest(() => filterApi(urlObj), {
     refreshDeps: [urlObj]
   })
+  async function deleteItem (item:T) {
+    mutate(data => {
+      return data.filter(i => i.objectId !== item.objectId)
+    })
+    await (deleteApi && deleteApi(item.objectId))
+    refresh()
+  }
   return (
-    <GalleryViewBox>
-      {data && data.map((item, index) => (<BaseCard
-        key={index}
-        name={item.name}
-        imgUrl={item.imgUrl}
-        note={item.note}
-        tagList={item.tagList}
-        data={item}
-      >
-      </BaseCard>))}
-      <div css={x`w83 h.f`}>
-        <AddButton onClick={setTrue}></AddButton>
-      </div>
-      {dialogChild && dialogChild(urlObj, { visible, setFalse, setTrue }, { refresh })}
-    </GalleryViewBox>
+    <ActionContext.Provider value={{ routeAction: routeAction, delete: deleteItem }}>
+      <GalleryViewBox>
+        {data && data.map((item, index) => (<BaseCard
+          key={index}
+          name={item.name}
+          imgUrl={item.imgUrl}
+          note={item.note}
+          tagList={item.tagList}
+          data={item}
+        >
+        </BaseCard>))}
+        <div css={x`w83 h.f`}>
+          <AddButton onClick={setTrue}></AddButton>
+        </div>
+        {dialogChild && dialogChild(urlObj, { visible, setFalse, setTrue }, { refresh })}
+      </GalleryViewBox>
+    </ActionContext.Provider>
+
   )
 }
 export default GalleryView

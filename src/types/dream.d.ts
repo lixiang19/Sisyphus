@@ -49,3 +49,4 @@ type Order = {
   tableName: string,
   orderList: string[],
 }&BaseBmobItem
+type GroupBy = 'status' | 'priority'
