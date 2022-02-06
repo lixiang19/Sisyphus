@@ -22,6 +22,7 @@ const TodoBox = styled.div(x`
   px8                                   
   py8
 `)
+
 interface TodoProps {
   children?: React.ReactNode;
 }
@@ -29,25 +30,40 @@ const Todo = ({ children }: TodoProps) => {
   const [urlObj, setUrlObj] = useUrlState()
   const history = useHistory()
   function setUrlDreamId (data:Todo) {
-    // history.push('/todo')
-    // setUrlObj({ taskFk: data.objectId })
+    history.push('/')
+    setUrlObj({ taskFk: undefined })
   }
   return (
     <TodoBox>
-      <ActionContext.Provider value={{ routeAction: setUrlDreamId }}>
-        <PageHeader title='目标'>
-          <TabPane key='1' title='看板'>
-            <BoardView
-              groupBy='status'
-              group={ConstVar.statusOptions}
-              updateApi={api.todo.updateTodo}
-              filterApi={api.todo.filterAndGroupTodo}
-              dialogChild={(data, { visible, setFalse }, { refresh }) => (
-                <FormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
-            ></BoardView>
-          </TabPane>
-        </PageHeader>
-      </ActionContext.Provider>
+      <PageHeader title='燃烧日程'>
+        <TabPane key='1' title='紧急度'>
+          <BoardView
+            groupBy='priority'
+            group={ConstVar.priorityOptions}
+            routeAction={setUrlDreamId}
+            deleteApi={api.todo.deleteItem}
+            updateApi={api.todo.updateTodo}
+            completeApi={api.todo.completeItem}
+            filterApi={(groupBy, group, obj) => api.todo.filterAndGroupTodo(groupBy, group, obj, { status: 'complete' })}
+            dialogChild={(data, { visible, setFalse }, { refresh }) => (
+              <FormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
+          ></BoardView>
+        </TabPane>
+        <TabPane key='2' title='看板'>
+          <BoardView
+            groupBy='status'
+            group={ConstVar.TodoStatusOptions}
+            routeAction={setUrlDreamId}
+            deleteApi={api.todo.deleteItem}
+            updateApi={api.todo.updateTodo}
+            completeApi={api.todo.completeItem}
+            filterApi={api.todo.filterAndGroupTodo}
+            dialogChild={(data, { visible, setFalse }, { refresh }) => (
+              <FormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
+          ></BoardView>
+        </TabPane>
+
+      </PageHeader>
     </TodoBox>
   )
 }

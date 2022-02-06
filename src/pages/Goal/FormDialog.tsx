@@ -9,10 +9,21 @@ import AddButton from 'src/components/AddButton'
 import { Form, Input, Button, Checkbox, Select, DatePicker } from '@arco-design/web-react'
 import ConstVar from 'src/helpers/ConstVar'
 import Dialog from 'src/components/Dialog'
+const TextArea = Input.TextArea
 
 const { RangePicker } = DatePicker
 const Option = Select.Option
 const FormItem = Form.Item
+function formatData (data:any) {
+  const newData = data
+  if (data.deadline) {
+    newData.deadlineParam = data.deadline.iso
+  }
+  if (data.dreamFk) {
+    newData.dreamId = data.dreamFk.objectId
+  }
+  return newData
+}
 interface FormProps {
   onCancel: () => void;
   onConfirm: () => void;
@@ -21,14 +32,15 @@ interface FormProps {
 }
 const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) => {
   const { data: dreamOptions } = useRequest(() => api.dream.filterDream({ status: 'inProgress' }))
-  const { run } = useRequest(api.goal.addGoal, {
-    manual: true
-  })
+  const formatterInitialData = useMemo(() => formatData(initialData), [initialData])
   const [urlObj] = useUrlState()
   const [form] = Form.useForm()
   function handleConfirm () {
     form.validate().then((values) => {
-      run(values).then((result) => {
+      if (initialData.objectId) {
+        values = Object.assign(values, { objectId: initialData.objectId })
+      }
+      api.goal.addGoal(values).then((result) => {
         onConfirm()
       })
     }).catch((error) => {
@@ -37,8 +49,8 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
   }
   useEffect(() => {
     form.resetFields()
-    form.setFieldsValue(initialData)
-  }, [visible])
+    form.setFieldsValue(formatterInitialData)
+  }, [initialData])
   function handleCancel () {
     onCancel()
   }
@@ -49,7 +61,7 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
           <FormItem label='任务名称' field='name' rules={[{ required: true }]} >
             <Input />
           </FormItem>
-          <FormItem label='状态' field='status'>
+          <FormItem label='状态' field='status' rules={[{ required: true }]} initialValue='ready'>
             <Select>
               {ConstVar.statusOptions.map((option, index) => (
                 <Option key={option.value} value={option.value}>
@@ -58,7 +70,7 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
               ))}
             </Select>
           </FormItem>
-          <FormItem label='梦想' field='dreamId' initialValue={urlObj.dreamFk}>
+          <FormItem label='梦想' field='dreamId' initialValue={urlObj.dreamFk} rules={[{ required: true }]} >
             <Select>
               {dreamOptions && dreamOptions.map((option, index) => (
                 <Option key={option.objectId} value={option.objectId}>
@@ -67,7 +79,7 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
               ))}
             </Select>
           </FormItem>
-          <FormItem label='优先级' field='priority'>
+          <FormItem label='优先级' field='priority' rules={[{ required: true }]} initialValue={1}>
             <Select>
               {ConstVar.priorityOptions.map((option, index) => (
                 <Option key={option.value} value={option.value}>
@@ -79,11 +91,12 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
           <FormItem
             label='截至日期'
             field='deadlineParam'
+            rules={[{ required: true }]}
           >
             <DatePicker />
           </FormItem>
           <FormItem label='备注' field='note'>
-            <Input />
+            <TextArea autoSize/>
           </FormItem>
           <FormItem label='图片地址' field='imgUrl'>
             <Input />

@@ -26,7 +26,8 @@ const HeaderBox = styled.div(
   s.h[15],
   s.w[90],
   s.flex.row.sb.c,
-  s.font.size.md
+  s.font.size.md,
+  s.flex.noShrink
 )
 interface IHeader {
   children?: React.ReactNode;
@@ -53,7 +54,9 @@ const TagBoardWrapperBox = styled.div(
   s.bg.gray[200],
   s.py[1],
   s.px[5],
-  s.rounded.sm
+  s.rounded.sm,
+  s.relative,
+  s.overflow.hidden
 )
 interface IStatusWrapper {
   children?: React.ReactNode;

@@ -12,9 +12,9 @@ function setRem () {
   docEl.style.fontSize = 100 * (clientWidth / 2560) + 'px'
 }
 setRem()
-// window.onresize = () => {
-//   setRem()
-// }
+window.onresize = () => {
+  setRem()
+}
 ReactDOM.render(
 
   <App />,

@@ -31,8 +31,16 @@ const checkToday = async () => {
   }
   return dateId
 }
+const getTimestamp = async () => {
+  const { datetime } = await (Bmob.timestamp() as Promise<any>)
+  return {
+    datetime,
+    bombDate: genDate(datetime)
+  }
+}
 export default {
   findDay,
   addDate,
-  checkToday
+  checkToday,
+  getTimestamp
 }

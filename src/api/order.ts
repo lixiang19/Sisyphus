@@ -41,7 +41,13 @@ async function updateOrderByTableName (tableName: string, targetOrder: number, s
   const query = Bmob.Query('order')
   const { order, orderList } = await findOrderByTableName(tableName)
   query.set('id', order.objectId)
-  orderList.splice(targetOrder, 0, orderList.splice(sourceOrder, 1)[0])
+  const temp = orderList.splice(sourceOrder, 1)[0]
+  if (!temp) {
+    return
+  }
+
+  orderList.splice(targetOrder, 0, temp)
+
   query.set('orderList', orderList as unknown as string)
   return gen<BaseBmobItem>(query.save())
 }

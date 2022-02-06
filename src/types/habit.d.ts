@@ -33,4 +33,4 @@ type DateHabitRelationJoin = {
   habitFk: Pointer&Habit,
   dateFk: Pointer&DateType,
   level: number,
-}
+}&BaseBmobItem

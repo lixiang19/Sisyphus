@@ -5,6 +5,7 @@ interface IAction<T> {
   edit?:(data:T)=>void,
   add?:(data:T)=>void,
   update?:(data:T)=>void,
+  complete?:(data:T)=>void,
   filterApi?:(data:T)=>void,
 }
 export const ActionContext = createContext({} as IAction<any>)

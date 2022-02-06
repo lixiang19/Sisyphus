@@ -22,7 +22,8 @@ const TabSelect = styled(Tabs)({
     display: 'flex'
   },
   '.arco-tabs-pane': {
-    height: '10.8rem'
+    height: '10.8rem',
+    width: '100%'
   }
 })
 interface PageHeaderProps {
@@ -40,7 +41,7 @@ const Action = ({ children }: IAction) => {
   const [urlObj, setUrlObj] = useUrlState()
   function clearUrlState () {
     setUrlObj((res) => {
-      console.log('🚀 ~ file: index.tsx ~ line 43 ~ setUrlObj ~ res', res)
+
     })
   }
   return (

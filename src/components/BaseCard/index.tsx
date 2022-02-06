@@ -7,6 +7,9 @@ import { Dropdown, Menu, Button, Space } from '@arco-design/web-react'
 import { IconArrowRight, IconDelete, IconEdit, IconMore } from '@arco-design/web-react/icon'
 import { ActionContext } from 'src/store/context'
 import CompleteIcon from 'src/components/CompleteIcon'
+import { isUrl } from 'src/helpers/str'
+import { openExternal } from 'src/helpers/platformApi'
+
 const Header = styled.div(x`
   w.full
   fc.neutral800
@@ -48,12 +51,12 @@ const BaseCardBox = styled.div(x`
   transform.all
 `,
 s.hover(
-  s.card.lg,
-  {
-    img: {
-      transform: 'scale(1.1)'
-    }
-  }
+  s.card.lg
+  // {
+  //   img: {
+  //     transform: 'scale(1.1)'
+  //   }
+  // }
 ))
 const FlexBox = styled.div(x`
   flex.row.e.c
@@ -62,6 +65,9 @@ const FlexBox = styled.div(x`
 const FlexBoxStart = styled.div(x`
   flex.row.s.c
   gap.x1
+`)
+const Href = styled.div(x`
+  font.color.sky500
 `)
 
 interface IContent {
@@ -75,7 +81,12 @@ const Content = ({ children, imgUrl, note }: IContent) => {
   } else if (imgUrl) {
     return (<img src={imgUrl}></img>)
   } else if (note) {
-    return (<p>{note}</p>)
+    if (isUrl(note)) {
+      // return (<a target="_blank" href={note} rel="noreferrer">{note}</a>)
+      return <Href onClick={() => openExternal(note)}>{note}</Href>
+    } else {
+      return (<p css={{ whiteSpace: 'pre-line', lineHeight: '200%' }} >{note}</p>)
+    }
   } else {
     return (<p>暂无内容</p>)
   }
@@ -85,7 +96,7 @@ const DropList = ({ data }:{data:any}) => {
 
   return (
     <Menu>
-      <Menu.Item key='1' css={{ color: s.theme.color.danger }}><IconEdit css={x`mr2`}/>编辑</Menu.Item>
+      <Menu.Item key='1' css={{ color: s.theme.color.danger }} onClick={() => action.update && action.update(data)}><IconEdit css={x`mr2`}/>编辑</Menu.Item>
       <Menu.Item key='2' onClick={() => action.delete && action.delete(data)}><IconDelete css={x`mr2`}/>删除</Menu.Item>
     </Menu>
   )
@@ -100,15 +111,17 @@ interface BaseCardProps<T> {
   innerRef?: any,
   size?: 'normal'|'large'|'small',
   data?:T
+  isHome?:boolean
 }
-function BaseCard<T> ({ name, tagList, children, imgUrl, note, innerRef, provided, data, size = 'normal' }:BaseCardProps<T>) {
+function BaseCard<T> ({ name, tagList, children, isHome = true, imgUrl, note, innerRef, provided, data, size = 'normal' }:BaseCardProps<T>) {
   const action = useContext(ActionContext)
 
   return (
     <BaseCardBox ref={innerRef} {...provided?.draggableProps} {...provided?.dragHandleProps}>
       <Header>
         <FlexBoxStart>
-          <CompleteIcon></CompleteIcon>
+
+          <CompleteIcon onClick={() => action.complete && action.complete(data)}></CompleteIcon>
           <span>{name}</span>
         </FlexBoxStart>
 
@@ -120,9 +133,12 @@ function BaseCard<T> ({ name, tagList, children, imgUrl, note, innerRef, provide
         </FlexBox>
 
       </Header>
-      <ContentBox size={size}>
-        <Content imgUrl={imgUrl} note={note}>{children}</Content>
-      </ContentBox>
+      {
+        (size !== 'small' || imgUrl || note || children) &&
+        (<ContentBox size={size}>
+          <Content imgUrl={imgUrl} note={note}>{children}</Content>
+        </ContentBox>)
+      }
       <Bottom>
         {tagList && tagList.map((tag, index) => (
           <StatusTag small={size === 'small'} color={tag.color} key={index}>{tag.label}</StatusTag>

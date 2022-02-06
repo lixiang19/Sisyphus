@@ -9,10 +9,21 @@ import AddButton from 'src/components/AddButton'
 import { Form, Input, Button, Checkbox, Select, DatePicker } from '@arco-design/web-react'
 import ConstVar from 'src/helpers/ConstVar'
 import Dialog from 'src/components/Dialog'
+const TextArea = Input.TextArea
 
 const { RangePicker } = DatePicker
 const Option = Select.Option
 const FormItem = Form.Item
+function formatData (data:any) {
+  const newData = data
+  if (data.timePeriodStart) {
+    newData.timePeriod = [data.timePeriodStart.iso, data.timePeriodEnd.iso]
+  }
+  if (data.goalFk) {
+    newData.goalId = data.goalFk.objectId
+  }
+  return newData
+}
 interface FormProps {
   onCancel: () => void;
   onConfirm: () => void;
@@ -21,14 +32,15 @@ interface FormProps {
 }
 const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) => {
   const { data: goalOptions } = useRequest(() => api.goal.filterGoal({ status: 'inProgress' }))
-  const { run } = useRequest(api.task.addTask, {
-    manual: true
-  })
+  const formatterInitialData = useMemo(() => formatData(initialData), [initialData])
   const [urlObj] = useUrlState()
   const [form] = Form.useForm()
   function handleConfirm () {
     form.validate().then((values) => {
-      run(values).then((result) => {
+      if (initialData.objectId) {
+        values = Object.assign(values, { objectId: initialData.objectId })
+      }
+      api.task.addTask(values).then((result) => {
         onConfirm()
       })
     }).catch((error) => {
@@ -37,19 +49,19 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
   }
   useEffect(() => {
     form.resetFields()
-    form.setFieldsValue(initialData)
-  }, [visible])
+    form.setFieldsValue(formatterInitialData)
+  }, [initialData])
   function handleCancel () {
     onCancel()
   }
   return (
     <>
       <Dialog visible={visible} onOk={handleConfirm} onCancel={handleCancel}>
-        <Form form={form} initialValues={initialData}>
+        <Form form={form} initialValues={formatterInitialData}>
           <FormItem label='任务名称' field='name' rules={[{ required: true }]} >
             <Input />
           </FormItem>
-          <FormItem label='状态' field='status'>
+          <FormItem label='状态' field='status' rules={[{ required: true }]} initialValue='ready'>
             <Select>
               {ConstVar.statusOptions.map((option, index) => (
                 <Option key={option.value} value={option.value}>
@@ -58,7 +70,7 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
               ))}
             </Select>
           </FormItem>
-          <FormItem label='目标' field='goalId' initialValue={urlObj.goalFk}>
+          <FormItem label='目标' field='goalId' initialValue={urlObj.goalFk} rules={[{ required: true }]}>
             <Select>
               {goalOptions && goalOptions.map((option, index) => (
                 <Option key={option.objectId} value={option.objectId}>
@@ -67,7 +79,7 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
               ))}
             </Select>
           </FormItem>
-          <FormItem label='优先级' field='priority'>
+          <FormItem label='优先级' field='priority' rules={[{ required: true }]} initialValue={1}>
             <Select>
               {ConstVar.priorityOptions.map((option, index) => (
                 <Option key={option.value} value={option.value}>
@@ -79,11 +91,13 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
           <FormItem
             label='任务日期'
             field='timePeriod'
+            rules={[{ required: true }]}
+
           >
             <RangePicker />
           </FormItem>
           <FormItem label='备注' field='note'>
-            <Input />
+            <TextArea autoSize/>
           </FormItem>
           <FormItem label='图片地址' field='imgUrl'>
             <Input />

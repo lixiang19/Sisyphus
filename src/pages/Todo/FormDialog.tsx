@@ -13,6 +13,16 @@ import Dialog from 'src/components/Dialog'
 const { RangePicker } = DatePicker
 const Option = Select.Option
 const FormItem = Form.Item
+const TextArea = Input.TextArea
+
+function formatData (data:any) {
+  const newData = data
+
+  if (data.taskFk) {
+    newData.taskId = data.taskFk.objectId
+  }
+  return newData
+}
 interface FormProps {
   onCancel: () => void;
   onConfirm: () => void;
@@ -21,14 +31,15 @@ interface FormProps {
 }
 const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) => {
   const { data: taskOptions } = useRequest(() => api.task.filterTask({ status: 'inProgress' }))
-  const { run } = useRequest(api.todo.addTodo, {
-    manual: true
-  })
+  const formatterInitialData = useMemo(() => formatData(initialData), [initialData])
   const [urlObj] = useUrlState()
   const [form] = Form.useForm()
   function handleConfirm () {
     form.validate().then((values) => {
-      run(values).then((result) => {
+      if (initialData.objectId) {
+        values = Object.assign(values, { objectId: initialData.objectId, timeConsuming: initialData.timeConsuming })
+      }
+      api.todo.addTodo(values).then((result) => {
         onConfirm()
       })
     }).catch((error) => {
@@ -37,8 +48,8 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
   }
   useEffect(() => {
     form.resetFields()
-    form.setFieldsValue(initialData)
-  }, [visible])
+    form.setFieldsValue(formatterInitialData)
+  }, [initialData])
   function handleCancel () {
     onCancel()
   }
@@ -49,9 +60,9 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
           <FormItem label='任务名称' field='name' rules={[{ required: true }]} >
             <Input />
           </FormItem>
-          <FormItem label='状态' field='status'>
+          <FormItem label='状态' field='status' rules={[{ required: true }]} initialValue='ready'>
             <Select>
-              {ConstVar.statusOptions.map((option, index) => (
+              {ConstVar.TodoStatusOptions.map((option, index) => (
                 <Option key={option.value} value={option.value}>
                   {option.label}
                 </Option>
@@ -67,7 +78,7 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
               ))}
             </Select>
           </FormItem>
-          <FormItem label='优先级' field='priority'>
+          <FormItem label='优先级' field='priority' rules={[{ required: true }]} initialValue={1}>
             <Select>
               {ConstVar.priorityOptions.map((option, index) => (
                 <Option key={option.value} value={option.value}>
@@ -77,7 +88,7 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
             </Select>
           </FormItem>
           <FormItem label='备注' field='note'>
-            <Input />
+            <TextArea autoSize/>
           </FormItem>
           <FormItem label='图片地址' field='imgUrl'>
             <Input />

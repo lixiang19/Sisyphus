@@ -5,13 +5,21 @@ const statusOptions = [
   { label: '待开始', value: 'ready', color: s.theme.color.gray[400] },
   { label: '已完成', value: 'complete', color: s.theme.color.emerald[400] }]
 const priorityOptions = [
-  { label: '紧急', value: 3, color: s.theme.color.red[400] },
-  { label: '重要', value: 2, color: s.theme.color.fuchsia[400] },
   { label: '正常', value: 1, color: s.theme.color.sky[400] },
+  { label: '重要', value: 2, color: s.theme.color.fuchsia[400] },
+  { label: '紧急', value: 3, color: s.theme.color.red[400] },
   { label: '延后', value: 0, color: s.theme.color.slate[400] }
 ]
-
+// const TaskStatusOptions = statusOptions.concat(
+//   [
+//     { label: '重复任务', value: 'repeat', color: s.theme.color.blue[400] }
+//   ]
+// )
+const TodoStatusOptions = [statusOptions[0], statusOptions[1], { label: '持续', value: 'persist', color: s.theme.color.blue[400] }, statusOptions[2]]
+const AllStatusOptions = statusOptions.concat(TodoStatusOptions)
 export default {
   statusOptions,
-  priorityOptions
+  priorityOptions,
+  TodoStatusOptions,
+  AllStatusOptions
 }

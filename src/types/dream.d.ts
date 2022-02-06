@@ -32,8 +32,8 @@ type Goal = {
 type Task = {
   goalFk: Goal,
   timePeriod: string[],
-  timePeriodStart?: BmobDate,
-  timePeriodEnd?: BmobDate,
+  timePeriodStart: BmobDate,
+  timePeriodEnd: BmobDate,
 }&Required<BaseTask>
 type Todo = {
   taskFk: Task,

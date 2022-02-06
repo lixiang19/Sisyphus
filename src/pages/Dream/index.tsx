@@ -32,16 +32,11 @@ const Dream = ({ children }: DreamProps) => {
   }
   return (
     <DreamBox>
-
       <PageHeader title='梦想'>
         <TabPane key='1' title='Gallery' >
-          <GalleryView deleteApi={api.dream.deleteItem} filterApi={api.dream.filterDream}></GalleryView>
-        </TabPane>
-        <TabPane key='2' title='Board'>
-          aa
+          <GalleryView completeApi={api.dream.completeItem} routeAction={setUrlId} deleteApi={api.dream.deleteItem} filterApi={api.dream.filterDream}></GalleryView>
         </TabPane>
       </PageHeader>
-
     </DreamBox>
   )
 }

@@ -9,6 +9,7 @@ import task from './task'
 import todo from './todo'
 import temporary from './temporary'
 import enjoy from './enjoy'
+import statistics from './statistics'
 export default {
   habit,
   user,
@@ -20,5 +21,6 @@ export default {
   enjoy,
   temporary,
   task,
-  todo
+  todo,
+  statistics
 }

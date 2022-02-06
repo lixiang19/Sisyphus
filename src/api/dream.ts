@@ -20,6 +20,14 @@ const filterDream = async (obj:IAnyPropObject) => {
   })
   return dreams
 }
+const completeItem = async (id:string) => {
+  const query = Bmob.Query('dream')
+  const { bombDate } = await dateApi.getTimestamp()
+  query.set('completeTime', bombDate as any)
+  query.set('id', id)
+  query.set('status', 'complete')
+  return gen<BaseBmobItem>(query.save())
+}
 const deleteItem = async (id:string) => {
   const query = Bmob.Query('task')
   await gen(query.destroy('objectId'))
@@ -28,5 +36,6 @@ const deleteItem = async (id:string) => {
 }
 export default {
   filterDream,
-  deleteItem
+  deleteItem,
+  completeItem
 }
