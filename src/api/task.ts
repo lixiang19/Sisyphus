@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import { genDate, gen, genRandColor, genParentTag, genPeriodTag, genCountdownDay, genPriorityTag, genTimePeriod, genStatusTag, genConsumingTag } from 'src/helpers/bmob'
 import dateApi from './date'
 import orderApi from './order'
+
 async function setTagList<T extends Task> (obj:T) {
   const statusTag = genStatusTag(obj.status)
   const priorityTag = genPriorityTag(obj.priority)
@@ -22,6 +23,22 @@ const filterTask = async (obj:IAnyPropObject) => {
   const tasks = await (query.find() as unknown as Task[])
   const list = await orderApi.sortItAndSetOrder('task', tasks)
   return list
+}
+const filterTaskTransToScheduleView = async (obj:IAnyPropObject) => {
+  const list = await filterTask(Object.assign(obj, { status: 'inProgress' }))
+
+  const events = list.map((item) => {
+    const event = {
+      id: item.objectId,
+      name: item.name,
+      start: item.timePeriodStart.iso,
+      end: item.timePeriodEnd.iso,
+      color: item.color
+    }
+    return event
+  })
+
+  return events
 }
 const filterAndGroupTask = async (groupBy:string, group:Options[], obj:IAnyPropObject) => {
   const query = Bmob.Query('task')
@@ -91,5 +108,6 @@ export default {
   updateTask,
   addTask,
   filterTask,
-  deleteItem
+  deleteItem,
+  filterTaskTransToScheduleView
 }

@@ -15,7 +15,7 @@ const priorityOptions = [
 //     { label: '重复任务', value: 'repeat', color: s.theme.color.blue[400] }
 //   ]
 // )
-const TodoStatusOptions = [statusOptions[0], statusOptions[1], { label: '持续', value: 'persist', color: s.theme.color.blue[400] }, statusOptions[2]]
+const TodoStatusOptions = [statusOptions[0], statusOptions[1]]
 const AllStatusOptions = statusOptions.concat(TodoStatusOptions)
 export default {
   statusOptions,

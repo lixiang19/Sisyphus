@@ -29,11 +29,11 @@ const filterAndGroupTodo = async (groupBy:string, group:Options[], obj:IAnyPropO
       query.equalTo(key as any, '!=', exclude[key])
     })
     query.include('taskFk')
-    const goals = await (query.find() as unknown as Todo[])
-    goals.forEach((goal) => {
-      return setTagList(goal)
+    const Todos = await (query.find() as unknown as Todo[])
+    Todos.forEach((todo) => {
+      return setTagList(todo)
     })
-    map[item.value] = await orderApi.sortItAndSetOrder('todo', goals)
+    map[item.value] = await orderApi.sortItAndSetOrder('todo', Todos)
   }
 
   return map
@@ -92,9 +92,41 @@ const addTodo = async (todo:Todo&{taskId:string}) => {
   const res = await orderApi.addOrderByTableName('todo', objectId)
   return res
 }
+const filterRepeatabilityTodo = async (obj:IAnyPropObject) => {
+  const query = Bmob.Query('repeatabilityTodo')
+  obj && Object.keys(obj).forEach((key) => {
+    query.equalTo(key as any, '==', obj[key])
+  })
+  query.include('taskFk')
+  const Todos = await (query.find() as unknown as Todo[])
+  Todos.forEach(async (todo) => {
+    const obj = await setTagList(todo)
+    obj.tagList.pop()
+    return obj
+  })
+  return Todos
+}
+
+const addRepeatabilityTodo = async (todo:Todo&{taskId:string}) => {
+  const query = Bmob.Query('repeatabilityTodo')
+  const pointer = Bmob.Pointer('task')
+  todo.objectId && query.set('id', todo.objectId)
+  todo.taskId && query.set('taskFk', pointer.set(todo.taskId) as any)
+  query.set('name', todo.name)
+  query.set('priority', todo.priority as any)
+  query.set('color', genRandColor())
+  query.set('status', todo.status as any)
+  query.set('note', todo.note ?? '')
+  query.set('imgUrl', todo.imgUrl ?? '')
+  return gen<BaseBmobItem>(query.save())
+}
+const deleteRepeatabilityTodo = async (id:string) => {
+  const query = Bmob.Query('repeatabilityTodo')
+  return await gen<BaseBmobItem>(query.destroy(id))
+}
 const deleteItem = async (id:string) => {
   const query = Bmob.Query('todo')
-  query.destroy(id)
+  await gen<BaseBmobItem>(query.destroy(id))
   const res = await orderApi.deleteOrderByTableName('todo', id)
   return res
 }
@@ -103,5 +135,8 @@ export default {
   updateTodo,
   addTodo,
   completeItem,
-  deleteItem
+  deleteItem,
+  addRepeatabilityTodo,
+  filterRepeatabilityTodo,
+  deleteRepeatabilityTodo
 }

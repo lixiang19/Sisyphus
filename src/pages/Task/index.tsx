@@ -13,7 +13,7 @@ import { ActionContext } from 'src/store/context'
 import useUrlState from '@ahooksjs/use-url-state'
 import { useHistory } from 'react-router-dom'
 import FormDialog from './FormDialog'
-import CalendarView from 'src/components/CalendarView'
+import ScheduleView from 'src/components/ScheduleView'
 
 const TabPane = Tabs.TabPane
 const TaskBox = styled.div(x`
@@ -36,7 +36,7 @@ const Task = ({ children }: TaskProps) => {
   return (
     <TaskBox>
       <PageHeader title='任务'>
-        <TabPane key='1' title='看板'>
+        <TabPane key='2' title='看板'>
           <BoardView
             groupBy='status'
             group={ConstVar.statusOptions}
@@ -49,8 +49,8 @@ const Task = ({ children }: TaskProps) => {
               <FormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
           ></BoardView>
         </TabPane>
-        <TabPane key='2' title='日历'>
-          <CalendarView filterApi={api.task.filterTask}></CalendarView>
+        <TabPane key='1' title='日历'>
+          <ScheduleView filterApi={api.task.filterTaskTransToScheduleView}></ScheduleView>
         </TabPane>
       </PageHeader>
     </TaskBox>

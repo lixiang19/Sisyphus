@@ -17,6 +17,7 @@ const PageHeaderBox = styled.div(x`
 `)
 
 const TabSelect = styled(Tabs)({
+  width: '100%',
   '.arco-tabs-header': {
     height: '0.5rem',
     display: 'flex'

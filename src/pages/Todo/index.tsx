@@ -13,6 +13,7 @@ import { ActionContext } from 'src/store/context'
 import useUrlState from '@ahooksjs/use-url-state'
 import { useHistory } from 'react-router-dom'
 import FormDialog from './FormDialog'
+import RepeatFormDialog from './RepeatFormDialog'
 
 const TabPane = Tabs.TabPane
 const TodoBox = styled.div(x`
@@ -52,7 +53,7 @@ const Todo = ({ children }: TodoProps) => {
         <TabPane key='2' title='看板'>
           <BoardView
             groupBy='status'
-            group={ConstVar.TodoStatusOptions}
+            group={ConstVar.statusOptions}
             routeAction={setUrlDreamId}
             deleteApi={api.todo.deleteItem}
             updateApi={api.todo.updateTodo}
@@ -62,7 +63,12 @@ const Todo = ({ children }: TodoProps) => {
               <FormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
           ></BoardView>
         </TabPane>
-
+        <TabPane key='3' title='持续任务' >
+          <GalleryView completeApi={api.todo.deleteRepeatabilityTodo} deleteApi={api.todo.deleteRepeatabilityTodo} filterApi={api.todo.filterRepeatabilityTodo}
+            dialogChild={(data, { visible, setFalse }, { refresh }) => (
+              <RepeatFormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></RepeatFormDialog>)}
+          ></GalleryView>
+        </TabPane>
       </PageHeader>
     </TodoBox>
   )

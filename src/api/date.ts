@@ -11,6 +11,7 @@ const findDay = async (date:Date) => {
   query.equalTo('date', '<', end)
   return gen<DateType[]>(query.find())
 }
+
 const addDate = async (date:Date) => {
   const query = Bmob.Query('date')
   query.set('date', genDate(date) as any)
@@ -33,8 +34,12 @@ const checkToday = async () => {
 }
 const getTimestamp = async () => {
   const { datetime } = await (Bmob.timestamp() as Promise<any>)
+  const time = dayjs(datetime).format('YYYY-MM-DD HH:mm:ss')
+  const ymd = dayjs(datetime).format('YYYY-MM-DD')
   return {
     datetime,
+    time,
+    ymd,
     bombDate: genDate(datetime)
   }
 }

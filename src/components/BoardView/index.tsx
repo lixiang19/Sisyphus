@@ -179,7 +179,7 @@ function BoardView<T extends BaseTask> ({ group, filterApi, updateApi, onComplet
     await updateApi(currentItem.objectId, { timeConsuming, updateTimeConsuming: true })
     refresh()
   }
-  const finallyGroup = isHome ? [group[0], group[1], group[2]] : group
+  const finallyGroup = isHome ? [group[0], group[1]] : group
   return (
     <ActionContext.Provider value={{ routeAction: isHome ? readyTomato : routeAction, delete: deleteItem, update: updateItem, complete: completeItem }}>
       {

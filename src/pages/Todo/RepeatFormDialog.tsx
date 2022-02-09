@@ -29,10 +29,9 @@ interface FormProps {
   visible: boolean;
   initialData?: any;
 }
-const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) => {
+const RepeatFormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) => {
   const { data: taskOptions } = useRequest(() => api.task.filterTask({ status: 'inProgress' }))
   const formatterInitialData = useMemo(() => formatData(initialData), [initialData])
-
   const [urlObj] = useUrlState()
   const [form] = Form.useForm()
   function handleConfirm () {
@@ -40,7 +39,7 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
       if (initialData.objectId) {
         values = Object.assign(values, { objectId: initialData.objectId, timeConsuming: initialData.timeConsuming })
       }
-      api.todo.addTodo(values).then((result) => {
+      api.todo.addRepeatabilityTodo(values).then((result) => {
         onConfirm()
       })
     }).catch((error) => {
@@ -57,7 +56,7 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
   return (
     <>
       <Dialog visible={visible} onOk={handleConfirm} onCancel={handleCancel}>
-        <Form form={form}>
+        <Form form={form} initialValues={initialData}>
           <FormItem label='任务名称' field='name' rules={[{ required: true }]} >
             <Input />
           </FormItem>
@@ -99,4 +98,4 @@ const FormDialog = ({ onCancel, visible, initialData, onConfirm }: FormProps) =>
     </>
   )
 }
-export default FormDialog
+export default RepeatFormDialog

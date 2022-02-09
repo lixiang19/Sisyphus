@@ -120,7 +120,6 @@ function BaseCard<T> ({ name, tagList, children, isHome = true, imgUrl, note, in
     <BaseCardBox ref={innerRef} {...provided?.draggableProps} {...provided?.dragHandleProps}>
       <Header>
         <FlexBoxStart>
-
           <CompleteIcon onClick={() => action.complete && action.complete(data)}></CompleteIcon>
           <span>{name}</span>
         </FlexBoxStart>

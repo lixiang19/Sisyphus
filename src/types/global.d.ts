@@ -6,5 +6,5 @@ type VSCode = {
   getState(): any;
   setState(state: any): void;
 };
-
+declare module 'react-gantt-timeline';
 declare const vscode: VSCode

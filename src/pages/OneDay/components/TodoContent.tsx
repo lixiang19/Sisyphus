@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import s, { x } from 'src/styles/styleHelper'
-import { useRequest } from 'ahooks'
+import { useBoolean, useRequest, useSetState } from 'ahooks'
 import { useState, useEffect, useMemo, useRef, useContext } from 'react'
 import BoardView from 'src/components/BoardView'
 import FormDialog from 'src/pages/Todo/FormDialog'
@@ -10,6 +10,8 @@ import Tomato from 'src/components/Tomato'
 import { EventContext } from 'src/store/EventContext'
 import { Button, Radio } from '@arco-design/web-react'
 import useUrlState from '@ahooksjs/use-url-state'
+import GalleryView from 'src/components/GalleryView'
+import RepeatFormDialog from 'src/pages/Todo/RepeatFormDialog'
 const RadioGroup = Radio.Group
 
 const ActionBox = styled.div(x`
@@ -74,6 +76,9 @@ const Action = ({ children }: IAction) => {
     </ActionBox>
   )
 }
+const FlexBox = styled.div(x`
+  flex.row.c.c
+`)
 const TodoContentBox = styled.div(x`
   h.full
   relative
@@ -86,7 +91,22 @@ interface TodoContentProps {
 }
 const TodoContent = ({ children }: TodoContentProps) => {
   const { event$ } = useContext(EventContext)
+  const [isShow, { setFalse, setTrue }] = useBoolean(false)
+  const [repeatData, setRepeatData] = useState({})
 
+  async function routeAction (args:any) {
+    setTrue()
+    const { time } = await api.date.getTimestamp()
+    const data = {
+      ...args,
+      name: args.name + time
+    }
+    setRepeatData(data)
+  }
+  function setShowFalse () {
+    setFalse()
+    setRepeatData({})
+  }
   function onComplete () {
     event$.emit('refresh')
   }
@@ -95,20 +115,26 @@ const TodoContent = ({ children }: TodoContentProps) => {
       <Action>
 
       </Action>
+      <FlexBox>
+        <BoardView
+          groupBy='status'
+          group={ConstVar.TodoStatusOptions}
+          routeAction={(data) => { console.log(data) }}
+          deleteApi={api.todo.deleteItem}
+          completeApi={api.todo.completeItem}
+          updateApi={api.todo.updateTodo}
+          filterApi={(groupBy, group, obj) => api.todo.filterAndGroupTodo(groupBy, group, obj, { priority: 0 })}
+          isHome={true}
+          onComplete={onComplete}
+          dialogChild={(data, { visible, setFalse }, { refresh }) => (
+            <FormDialog initialData={{ ...data, ...repeatData }} visible={visible || isShow} onCancel={() => { setShowFalse(); setFalse() }} onConfirm={() => { setShowFalse(); setFalse(); refresh() }}></FormDialog>)}
+        ></BoardView>
+        <GalleryView isHome={true} routeAction={routeAction} completeApi={api.todo.deleteRepeatabilityTodo} deleteApi={api.todo.deleteRepeatabilityTodo} filterApi={api.todo.filterRepeatabilityTodo}
+          dialogChild={(data, { visible, setFalse }, { refresh }) => (
+            <RepeatFormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></RepeatFormDialog>)}
+        ></GalleryView>
+      </FlexBox>
 
-      <BoardView
-        groupBy='status'
-        group={ConstVar.TodoStatusOptions}
-        routeAction={(data) => { console.log(data) }}
-        deleteApi={api.todo.deleteItem}
-        completeApi={api.todo.completeItem}
-        updateApi={api.todo.updateTodo}
-        filterApi={(groupBy, group, obj) => api.todo.filterAndGroupTodo(groupBy, group, obj, { priority: 0 })}
-        isHome={true}
-        onComplete={onComplete}
-        dialogChild={(data, { visible, setFalse }, { refresh }) => (
-          <FormDialog initialData={data} visible={visible} onCancel={setFalse} onConfirm={() => { setFalse(); refresh() }}></FormDialog>)}
-      ></BoardView>
     </TodoContentBox>
   )
 }

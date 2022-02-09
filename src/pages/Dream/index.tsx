@@ -33,7 +33,7 @@ const Dream = ({ children }: DreamProps) => {
   return (
     <DreamBox>
       <PageHeader title='梦想'>
-        <TabPane key='1' title='Gallery' >
+        <TabPane key='1' title='画廊' >
           <GalleryView completeApi={api.dream.completeItem} routeAction={setUrlId} deleteApi={api.dream.deleteItem} filterApi={api.dream.filterDream}></GalleryView>
         </TabPane>
       </PageHeader>

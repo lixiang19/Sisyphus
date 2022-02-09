@@ -29,9 +29,10 @@ interface GalleryViewProps<T> {
   dialogChild?: (...args: any[]) => React.ReactNode
   routeAction?: (...args: any[]) => void
   updateApi?: (id: string, ...args: any[]) => Promise<any>
-  completeApi: (id: string) => Promise<any>
+  completeApi: (id: string) => Promise<any>;
+  isHome?:boolean
 }
-function GalleryView<T extends BaseTask> ({ filterApi, dialogChild, routeAction, completeApi, deleteApi }: GalleryViewProps<T>) {
+function GalleryView<T extends BaseTask> ({ isHome, filterApi, dialogChild, routeAction, completeApi, deleteApi }: GalleryViewProps<T>) {
   const [initialData, setInitialData] = useState<IAnyPropObject>({})
 
   const [urlObj] = useUrlState()
@@ -70,6 +71,7 @@ function GalleryView<T extends BaseTask> ({ filterApi, dialogChild, routeAction,
           note={item.note}
           tagList={item.tagList}
           data={item}
+          size={isHome ? 'small' : 'normal'}
         >
         </BaseCard>))}
         <div css={x`w83 h.f`}>

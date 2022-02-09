@@ -8,6 +8,7 @@ import Dream from 'src/pages/Dream'
 import Goal from 'src/pages/Goal'
 import Task from 'src/pages/Task'
 import Diet from 'src/pages/Diet'
+import KeepFit from 'src/pages/KeepFit'
 const routeList: RouteConfig[] = [
   {
     path: '/',
@@ -45,6 +46,10 @@ const routeList: RouteConfig[] = [
   {
     path: '/diet',
     component: Diet
+  },
+  {
+    path: '/keepFit',
+    component: KeepFit
   }
 ]
 export default routeList

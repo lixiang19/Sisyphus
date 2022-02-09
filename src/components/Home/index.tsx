@@ -12,12 +12,12 @@ const HomeBox = styled.div(
   s.w['100vw'],
   s.overflow.hidden,
   s.bg.stone[100],
-  s.grid.cols['2rem 1fr']
+  s.grid.cols['8vw 92vw']
 )
 
 const ContentBox = styled.div(
   s.padding.all[3],
-  s.w.full,
+
   s.h['100vh']
 )
 
@@ -43,8 +43,11 @@ const Home = ({ children }:IHomeProps) => {
         <MenuItem path='/dream' icon={<IconAli type='icon-chengchangjilu'/>}>
             梦想
         </MenuItem>
-        <MenuItem path='/diet' icon={<IconAli type='icon-jianshen'/>}>
-            饮食与运动
+        <MenuItem path='/diet' icon={<IconAli type='icon-shiwu-'/>}>
+            饮食制定
+        </MenuItem>
+        <MenuItem path='/keepFit' icon={<IconAli type='icon-jianshen'/>}>
+            健身播报
         </MenuItem>
         {/* <MenuItem path='/demo' icon={<IconApps/>}>
             测试页面
