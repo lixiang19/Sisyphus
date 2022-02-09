@@ -1,7 +1,7 @@
 const color:ThemeColor = {
   // primary: '#00bcd4',
   get primary () {
-    return this.violet[500]
+    return this.themeColor[500]
   },
   get danger () {
     return this.red[500]
@@ -222,6 +222,18 @@ const color:ThemeColor = {
     700: '#4338ca',
     800: '#3730a3',
     900: '#312e81'
+  },
+  themeColor: {
+    50: '#f0f9ff',
+    100: '#e8defd',
+    200: '#d1befb',
+    300: '#b99dfa',
+    400: '#a27df8',
+    500: '#8b5cf6',
+    600: '#6f4ac5',
+    700: '#533794',
+    800: '#382562',
+    900: '#1c1231'
   },
   violet: {
     50: '#f5f3ff',

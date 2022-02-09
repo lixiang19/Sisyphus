@@ -26,23 +26,17 @@ interface DreamProps {
 const Dream = ({ children }: DreamProps) => {
   const [urlObj, setUrlObj] = useUrlState()
   const history = useHistory()
-  function setUrlDreamId (data:Dream) {
+  function setUrlId (data:Dream) {
     history.push('/goal')
     setUrlObj({ dreamFk: data.objectId })
   }
   return (
     <DreamBox>
-      <ActionContext.Provider value={{ cardClick: setUrlDreamId }}>
-        <PageHeader title='梦想'>
-          <TabPane key='1' title='Gallery' >
-            <GalleryView filterApi={api.dream.filterDream}></GalleryView>
-          </TabPane>
-          <TabPane key='2' title='Board'>
-          aa
-          </TabPane>
-        </PageHeader>
-      </ActionContext.Provider>
-
+      <PageHeader title='梦想'>
+        <TabPane key='1' title='Gallery' >
+          <GalleryView completeApi={api.dream.completeItem} routeAction={setUrlId} deleteApi={api.dream.deleteItem} filterApi={api.dream.filterDream}></GalleryView>
+        </TabPane>
+      </PageHeader>
     </DreamBox>
   )
 }

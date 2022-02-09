@@ -34,7 +34,7 @@ function List<T extends BaseTask> ({ list, keyId }:ListProps<T>) {
             return (
               <Draggable key={item.objectId} draggableId={item.objectId} index={index}>
                 {(provided:any) => (
-                  <BaseCard size='small' {...item} innerRef={provided.innerRef} provided={provided}></BaseCard>
+                  <BaseCard size='small' {...item} innerRef={provided.innerRef} provided={provided} data={item}></BaseCard>
                 )}
               </Draggable>
             )

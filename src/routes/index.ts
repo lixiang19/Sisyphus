@@ -6,6 +6,8 @@ import OneDay from 'src/pages/OneDay'
 import DreamManager from 'src/pages/DreamManager'
 import Dream from 'src/pages/Dream'
 import Goal from 'src/pages/Goal'
+import Task from 'src/pages/Task'
+import Diet from 'src/pages/Diet'
 const routeList: RouteConfig[] = [
   {
     path: '/',
@@ -35,6 +37,14 @@ const routeList: RouteConfig[] = [
   {
     path: '/goal',
     component: Goal
+  },
+  {
+    path: '/task',
+    component: Task
+  },
+  {
+    path: '/diet',
+    component: Diet
   }
 ]
 export default routeList

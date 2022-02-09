@@ -1,12 +1,13 @@
 {
-  "name": "dawn-react-template",
-  "version": "0.1.0",
+  "name": "sisyphus",
+  "version": "0.1.1",
   "private": true,
   "homepage": "./",
   "main": "main.js",
   "dependencies": {
     "@ahooksjs/use-url-state": "^3.1.5",
     "@arco-design/web-react": "^2.26.2",
+    "@arco-themes/react-task": "0.0.1",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@testing-library/jest-dom": "^5.11.4",
@@ -16,10 +17,12 @@
     "@types/node": "^12.0.0",
     "@types/react-dom": "^17.0.0",
     "ahooks": "^2.10.9",
-    "concurrently": "^6.4.0",
+    "concurrently": "^6.5.1",
     "dayjs": "^1.10.6",
     "electron-devtools-installer": "^3.2.0",
     "hydrogen-js-sdk": "^2.2.51",
+    "is-electron": "^2.2.1",
+    "node-notifier": "^10.0.0",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
@@ -35,22 +38,16 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "start": "concurrently \"npm run react-serve\" \"wait-on http://localhost:8000 && npm run electron-start\"",
-    "build": "npm run react-build && npm run electron-build",
-    "release": "npm run react-build && npm run electron-release",
+    "package": "npm run react-build && npm run electron-build",
     "electron-start": "electron . dev",
-    "electron-build-test": "electron-builder",
-    "electron-build": "mkdir build/src && cp -r electron/. build/electron",
-    "build-electron-win": "mkdir build\\src && Xcopy /E /I /Y electron build\\electron",
-    "electron-release": "electron-builder --publish=always",
-    "package": "npm run build && npm run build-electron && electron-builder build -c.extraMetadata.main=build/electron/main.js --publish never",
+    "electron-build": "electron-builder",
     "react-start": "set PORT=8000 && react-app-rewired start",
     "react-build": "react-app-rewired build",
-    "react-serve": "SET BROWSER=none && npm run react-start",
-    "package-win": "npm run build && npm run build-electron-win && electron-builder build -c.extraMetadata.main=build/electron/main.js --publish never"
+    "react-serve": "SET BROWSER=none && npm run react-start"
   },
   "build": {
     "extends": null,
-    "productName": "habit",
+    "productName": "sisyphus",
     "appId": "1222",
     "directories": {
       "output": "builder"
@@ -62,7 +59,7 @@
       ]
     },
     "nsis": {
-      "shortcutName": "habit",
+      "shortcutName": "sisyphus",
       "oneClick": false,
       "perMachine": true,
       "allowElevation": true,
@@ -72,7 +69,9 @@
     },
     "files": [
       "build/**/*",
-      "main.js"
+      "preload.js",
+      "main.js",
+      "icon.png"
     ]
   },
   "eslintConfig": {
@@ -117,7 +116,7 @@
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "customize-cra": "^1.0.0",
-    "electron": "^16.0.4",
+    "electron": "^16.0.8",
     "electron-builder": "^22.14.5",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",

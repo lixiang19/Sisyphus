@@ -5,8 +5,11 @@ import diet from './diet'
 import dreamManager from './dreamManager'
 import dream from './dream'
 import goal from './goal'
+import task from './task'
+import todo from './todo'
 import temporary from './temporary'
 import enjoy from './enjoy'
+import statistics from './statistics'
 export default {
   habit,
   user,
@@ -16,5 +19,8 @@ export default {
   goal,
   dreamManager,
   enjoy,
-  temporary
+  temporary,
+  task,
+  todo,
+  statistics
 }

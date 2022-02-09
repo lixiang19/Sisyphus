@@ -1,11 +1,13 @@
-const { app, BrowserWindow, ipc } = require('electron')
+const { app, BrowserWindow, ipc, ipcMain, Notification } = require('electron')
+
 const path = require('path')
 let mainWindow = null
+const process = require('process')
 // 判断命令行脚本的第二参数
 const mode = process.argv[2]
 
 // 限制只启动一个
-function makeSingleInstance() {
+function makeSingleInstance () {
   if (process.mas) return
   app.requestSingleInstanceLock()
   app.on('second-instance', () => {
@@ -15,9 +17,8 @@ function makeSingleInstance() {
     }
   })
 }
-
 // 用于添加Chromium插件
-function createDevTools() {
+function createDevTools () {
   const {
     default: installExtension,
     REACT_DEVELOPER_TOOLS
@@ -30,13 +31,16 @@ function createDevTools() {
 }
 
 // createWindow()方法来将index.html加载进一个新的BrowserWindow实例。
-function createWindow() {
+function createWindow () {
   const windowOptions = {
     width: 1000,
     height: 700,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true
+    },
+    show: true
+
     // frame:false, // 有没有边框
   }
   mainWindow = new BrowserWindow(windowOptions)
@@ -61,6 +65,11 @@ makeSingleInstance()
 // 只有在ready事件被激发后才能创建浏览器窗口
 app.whenReady().then(() => {
   createWindow()
+
+  if (process.platform === 'win32') {
+    app.setAppUserModelId(process.execPath)
+  }
+
   // 针对macos系统，在没有浏览器窗口打开的情况下调用你仅存的 createWindow() 方法
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
@@ -77,4 +86,5 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
 module.exports = mainWindow

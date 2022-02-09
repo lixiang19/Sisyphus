@@ -7,7 +7,7 @@ import api from 'src/api'
 
 const DietBox = styled.div(
   s.flex.col.s.s,
-  s.width[20],
+  s.width.full,
   s.gap.y[5],
   s.py[4]
 )
@@ -23,8 +23,8 @@ interface IDescriptionItem {
 const DescriptionItem = ({ children, label, value }: IDescriptionItem) => {
   return (
     <DescriptionItemBox>
-      <span css={{ ...s.label, ...s.font.color.white }}>{label}</span>
-      <span css={{ ...s.value, ...s.font.color.white }}>{value}</span>
+      <span css={{ ...s.font.size[6], ...s.font.color.white }}>{label}</span>
+      <span css={{ ...s.font.size[6], ...s.font.color.white }}>{value}</span>
     </DescriptionItemBox>
   )
 }

@@ -32,8 +32,8 @@ type Goal = {
 type Task = {
   goalFk: Goal,
   timePeriod: string[],
-  timePeriodStart?: BmobDate,
-  timePeriodEnd?: BmobDate,
+  timePeriodStart: BmobDate,
+  timePeriodEnd: BmobDate,
 }&Required<BaseTask>
 type Todo = {
   taskFk: Task,
@@ -49,3 +49,4 @@ type Order = {
   tableName: string,
   orderList: string[],
 }&BaseBmobItem
+type GroupBy = 'status' | 'priority'
