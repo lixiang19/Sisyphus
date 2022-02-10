@@ -99,6 +99,7 @@ const TodoContent = ({ children }: TodoContentProps) => {
     const { time } = await api.date.getTimestamp()
     const data = {
       ...args,
+      objectId: '',
       name: args.name + time
     }
     setRepeatData(data)

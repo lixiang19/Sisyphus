@@ -5,49 +5,51 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import MOTIONDATA, { TypeMotion } from './components/MOTIONDATA'
 import api from 'src/api'
 import { Button, Descriptions } from '@arco-design/web-react'
-
+let isPause = false
+let timer:any = null
 const KeepFitBox = styled.div(x`
   
 `)
 function speak (txt: string|number) {
   return new Promise<string>((resolve, reject) => {
     const utterThis = new window.SpeechSynthesisUtterance(txt.toString())
-    utterThis.lang = 'zh-TW'
+    // utterThis.lang = 'zh-TW'
     window.speechSynthesis.speak(utterThis)
     utterThis.onend = function (event) {
       resolve('ok')
     }
   })
 }
-function wait (duration: number) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve('ok')
-    }, duration * 1000)
-  })
-}
-function waitCountdownSpeak (second: number) {
+
+function waitCountDown (second: number, startFn?:Function, fn?:Function) {
   return new Promise((resolve, reject) => {
     let i = second
-    speak(i)
-    setInterval(() => {
-      i--
-      speak(i)
-      if (i === 0) {
-        resolve('ok')
+    startFn && startFn(i)
+    timer = setInterval(() => {
+      if (!isPause) {
+        i--
+        fn && fn(i)
+        if (i === 0) {
+          clearTimeout(timer)
+          resolve('ok')
+        }
       }
     }, 1000)
   })
 }
+async function waitCountdownSpeak (second: number) {
+  await waitCountDown(second, speak, speak)
+}
 async function waitFrequencySpeak (frequency: number, duration: number) {
-  for (let index = 1; index < frequency; index++) {
-    await speak(`${index}个`)
-    await wait(duration)
+  for (let index = 1; index <= frequency; index++) {
+    await speak(`完成${index}个`)
+    await waitCountDown(duration)
   }
 }
 async function speakMotionByGroup ({ frequency, group, duration }:{frequency:number, group:number, duration:number}) {
   for (let i = 1; i <= group; i++) {
     await speak(`第${i}组动作`)
+    await waitCountDown(1)
     await waitFrequencySpeak(frequency, duration)
   }
 }
@@ -78,16 +80,16 @@ type TypeHiit = {
 async function waitMotionListSpeak (list:string[], ruleType:'group'|'hiit'|'ladder', data:TypeLadder|TypeGroup|TypeHiit) {
   let i = 1
   for (const iterator of list) {
-    await speak(`第${i}个动作${iterator}`)
+    await speak(`第${i}个动作，${iterator},开始计时`)
     switch (ruleType) {
       case 'group':
-        speakMotionByGroup(data as TypeGroup)
+        await speakMotionByGroup(data as TypeGroup)
         break
       case 'hiit':
-        speakMotionByHiit(data as TypeHiit)
+        await speakMotionByHiit(data as TypeHiit)
         break
       case 'ladder':
-        speakMotionByLadder(data as TypeLadder)
+        await speakMotionByLadder(data as TypeLadder)
         break
       default:
         break
@@ -108,12 +110,13 @@ const KeepFit = ({ children }: KeepFitProps) => {
     if (!todayFlow) {
       await speak('获取训练计划不成功')
     } else {
+      isPause = false
       const { type, warmUp, train, relax } = todayFlow
       await speak(warmUp.startWords)
-      await waitCountdownSpeak(15)
+      await waitCountdownSpeak(10)
       await waitMotionListSpeak(warmUp.list, 'group', warmUp)
       await speak(warmUp.endWords)
-      await wait(1)
+      await waitCountDown(1)
       await speak(train.startWords)
       if (train.type === 'hiit') {
         await waitMotionListSpeak(train.list, 'hiit', train)
@@ -123,7 +126,7 @@ const KeepFit = ({ children }: KeepFitProps) => {
         }
       }
       await speak(train.endWords)
-      await wait(1)
+      await waitCountDown(1)
       await speak(relax.startWords)
       await waitCountdownSpeak(10)
       await waitMotionListSpeak(relax.list, 'group', relax)
@@ -152,13 +155,21 @@ const KeepFit = ({ children }: KeepFitProps) => {
     const todayFlow = (MOTIONDATA as any)[weekDay]
     setTodayFlow(todayFlow)
   }
-
+  function onPause () {
+    isPause = !isPause
+  }
+  function onStop () {
+    clearTimeout(timer)
+    timer = null
+  }
   useEffect(() => {
     setTodayData()
   }, [])
   return (
     <KeepFitBox>
-      <Button onClick={startTrain}>开始训练</Button>
+      <Button onClick={startTrain} type='primary'>开始训练</Button>
+      <Button onClick={onPause} type='primary'>{isPause ? '恢复' : '暂停'}计时</Button>
+      <Button onClick={onStop} type='primary'>结束训练</Button>
       <Descriptions title="今日训练" data={descriptionsData}></Descriptions>
     </KeepFitBox>
   )
