@@ -36,10 +36,12 @@ const getTimestamp = async () => {
   const { datetime } = await (Bmob.timestamp() as Promise<any>)
   const time = dayjs(datetime).format('YYYY-MM-DD HH:mm:ss')
   const ymd = dayjs(datetime).format('YYYY-MM-DD')
+  const dayjsTime = dayjs(datetime)
   return {
     datetime,
     time,
     ymd,
+    dayjsTime,
     bombDate: genDate(datetime)
   }
 }
