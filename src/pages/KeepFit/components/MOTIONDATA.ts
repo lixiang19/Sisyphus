@@ -14,7 +14,7 @@ function genWarmUp (list:string[]) {
 
 function genHiit (list:string[]) {
   return {
-    startWords: '接下来进行HIIT训练，全力地运动20秒，然后可以休息40秒，一组5分钟，预备',
+    startWords: '接下来进行HIIT训练，全力地运动20秒，然后可以休息40秒，一组5分钟，准备',
     high: 20,
     low: 40,
     breakTime: 60,
@@ -80,9 +80,9 @@ const list = {
     { trainList: ['俯身转体', '俯身转体', '哑铃水平飞鸟', '交替锤式弯举'], ruleType: 'ladder', bodyPart: '胸肌和肱二头肌' }),
   5: genFlow(
     'hiit',
-    ['开合步、直立体前屈、肩膀环绕'],
-    ['大腿前侧拉伸、肱三头肌拉伸'],
-    { trainList: ['大腿前侧拉伸、肱三头肌拉伸'] }
+    ['开合步', '直立体前屈', '肩膀环绕'],
+    ['大腿前侧拉伸', '肱三头肌拉伸'],
+    { trainList: ['波比', '动态平板支撑'] }
   )
 }
 export type TypeMotion = typeof list[4]
